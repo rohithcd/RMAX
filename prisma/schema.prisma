@@ -1,0 +1,20 @@
+// Define the datasource for PostgreSQL
+datasource db {
+  provider = "postgresql"  // PostgreSQL database
+  url      = env("DATABASE_URL")  // Connection URL from the .env file
+}
+
+// Define the Prisma client generator
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Define the User model
+model User {
+  id        Int      @id @default(autoincrement()) // Auto incrementing primary key
+  name String   @map("name")            // Map to "first_name" column
+  username  String   @unique             // Map to "last_name" column
+  email     String                       // Unique email
+  password  String   // Store the user's hashed password
+  createdAt DateTime @default(now())              // Automatically set to current timestamp
+}

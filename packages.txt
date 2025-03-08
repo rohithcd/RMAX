@@ -1,0 +1,2 @@
+- Node JS : 13.9.0
+- Postgres : 17.4
