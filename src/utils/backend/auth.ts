@@ -5,8 +5,6 @@ import { PrismaClient } from '@prisma/client';
 import { JWT } from "next-auth/jwt";
 import bcrypt from "bcryptjs";
 
-import type { User } from '@prisma/client'
-
 
 // Constants
 const BASE_URL = process.env.BASE_URL; //Value from environment variable
@@ -69,7 +67,7 @@ const authOptions: AuthOptions = {
     },
 
     pages: {
-        error: '/error', // Error code passed in query string as ?error=
+        //error: '/error', // Error code passed in query string as ?error=
     },
 
     callbacks: {
@@ -94,7 +92,7 @@ const authOptions: AuthOptions = {
         colorScheme: "light", // "auto" | "dark" | "light"
         brandColor: "", // Hex color code
         logo: `${BASE_URL}/icons/logo.png`, // Absolute URL to image
-        buttonText: "#FFFFAA" // Hex color code
+        buttonText: "#FF0000" // Hex color code
     }
 };
 
