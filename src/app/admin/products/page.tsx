@@ -1,23 +1,12 @@
 "use client";
 
-import {
-    TableHead,
-    TableRow,
-    TableHeader,
-    TableBody,
-    Table,
-    TableCell,
-} from "@/components/ui/table/table";
+// Importing Components
+import { TableHead, TableRow, TableHeader, TableBody, Table, TableCell } from "@/components/ui/table/table";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card/card";
+import Image from "next/image";
 
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card/card";
-
+// Importing icons
+import { DotsVerticalIcon } from "@radix-ui/react-icons";
 //import { Product } from './product';
 
 //import { SelectProduct } from '@/lib/db';
@@ -25,28 +14,81 @@ import { useRouter } from "next/navigation";
 //import { ChevronLeft, ChevronRight } from 'lucide-react';
 //import { Button } from '@/components/ui/button';
 
-/*import {
+import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuLabel,
     DropdownMenuTrigger
-  } from '@/components/ui/dropdownMenu/dropdownMenu';*/
+  } from '@/components/ui/dropdownMenu/dropdownMenu';
+
+import { Button } from "@/components/ui/Button/Button";
 
 //Constants
+
 const CARD_TITLE = "Products";
 const CARD_DESCRIPTION = "Manage your products and view their sales performance.";
 const PRODUCT_TITLES = ['Name', 'Description'];
 
-export function ProductsPage({
-    products = [],
-    offset,
-    totalProducts,
-}: {
-    products: any;
+interface Products {
+    id: string;
+    name: string;
+    description: string;
+    price: number;
+    quantity: number;
+    imageUrl: string;
+}
+
+interface ProductsPageProps {
+    products: Products[];
     offset: number;
     totalProducts: number;
-}) {
+}
+
+const productsTest = [
+	{
+		id: "1",
+		name: "Light",
+		description: "Active",
+		price: 20,
+		quantity: 25,
+		imageUrl: "https://picsum.photos/200/300",
+	},
+	{
+		id: "2",
+		name: "Light",
+		description: "Active",
+		price: 20,
+		quantity: 25,
+		imageUrl: "https://picsum.photos/200/300",
+	},
+	{
+		id: "3",
+		name: "Light",
+		description: "Active",
+		price: 20,
+		quantity: 25,
+		imageUrl: "https://picsum.photos/200/300",
+	},
+	{
+		id: "4",
+		name: "Light",
+		description: "Active",
+		price: 20,
+		quantity: 25,
+		imageUrl: "https://picsum.photos/200/300",
+	},
+	{
+		id: "5",
+		name: "Light",
+		description: "Active",
+		price: 20,
+		quantity: 25,
+		imageUrl: "https://picsum.photos/200/300",
+	}
+]
+
+export function ProductsPage({ products = [], offset, totalProducts }: ProductsPageProps) {
     //const router = useRouter();
     const productsPerPage = 5;
 
@@ -58,6 +100,10 @@ export function ProductsPage({
         router.push(`/?offset=${offset}`, { scroll: false });
     }*/
 
+	function deleteProduct() {
+		console.log("Deleting product...");
+	}
+
     return (
         <Card>
 
@@ -67,114 +113,128 @@ export function ProductsPage({
             </CardHeader>
 
             <CardContent>
-                <Table>
-                    <TableHeader>
-                        <TableRow>
-                            <TableHead className="hidden w-[100px] sm:table-cell">
-                                <span className="sr-only">Image</span>
-                            </TableHead>
+                <div className="relative w-full overflow-auto">
+                    <Table>
+                        <TableHeader>
+                            <TableRow>
+                                <TableHead className="hidden w-[100px] sm:table-cell">
+                                    <span className="sr-only">Image</span>
+                                </TableHead>
 
-                            {PRODUCT_TITLES?.map((title: string) => (
-                                <TableHead key={title}>{title}</TableHead>
-                            ))}
+								{PRODUCT_TITLES?.map((title: string) => (
+									<TableHead key={title}>{title}</TableHead>
+								))}
 
-                            {/* <TableHead className="hidden md:table-cell">Price</TableHead> */}
+                                {/* <TableHead className="hidden md:table-cell">Price</TableHead> */}
 
-                            <TableHead>
-                                <span className="sr-only">Actions</span>
-                            </TableHead>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        {/* {products.map((product) => (
-                <Product key={product.id} product={product} />
-            ))} */}
+                                <TableHead>
+                                    <span className="sr-only">Actions</span>
+                                </TableHead>
+                            </TableRow>
+                        </TableHeader>
 
-<TableRow>
-      <TableCell className="hidden sm:table-cell">
-        {/* <Image
-          alt="Product image"
-          className="aspect-square rounded-md object-cover"
-          height="64"
-          src={product.imageUrl}
-          width="64"
-        /> */}
-      </TableCell>
-      <TableCell className="font-medium">Light</TableCell>
-      <TableCell>
-        {/* <Badge variant="outline" className="capitalize"> */}
-          Active
-        {/* </Badge> */}
-      </TableCell>
-      {/* <TableCell className="hidden md:table-cell">{`$20`}</TableCell> */}
-      {/* <TableCell className="hidden md:table-cell">25</TableCell> */}
-      <TableCell className="hidden md:table-cell">
-        12-30-33
-      </TableCell>
-      <TableCell>
-        {/* <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button aria-haspopup="true" size="icon" variant="ghost">
-              <MoreHorizontal className="h-4 w-4" />
-              <span className="sr-only">Toggle menu</span>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem>Edit</DropdownMenuItem>
-            <DropdownMenuItem>
-              <form action={deleteProduct}>
-                <button type="submit">Delete</button>
-              </form>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu> */}
-      </TableCell>
-    </TableRow>
+                        <TableBody>
+							{productsTest.map((product) => (
+								<TableRow key={product.id}>
+									{product.imageUrl && 
+										<TableCell className="hidden sm:table-cell">
+											<Image
+												alt="Product image"
+												className="aspect-square rounded-md object-cover"
+												height="64"
+												src={product.imageUrl}
+												width="64"
+											/> 
+										</TableCell>
+									}
 
-    <TableRow>
-      <TableCell className="hidden sm:table-cell">
-        {/* <Image
-          alt="Product image"
-          className="aspect-square rounded-md object-cover"
-          height="64"
-          src={product.imageUrl}
-          width="64"
-        /> */}
-      </TableCell>
-      <TableCell className="font-medium">Light</TableCell>
-      <TableCell>
-        {/* <Badge variant="outline" className="capitalize"> */}
-          Active
-        {/* </Badge> */}
-      </TableCell>
-      {/* <TableCell className="hidden md:table-cell">{`$20`}</TableCell> */}
-      {/* <TableCell className="hidden md:table-cell">25</TableCell> */}
-      <TableCell className="hidden md:table-cell">
-        12-30-33
-      </TableCell>
-      <TableCell>
-        {/* <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button aria-haspopup="true" size="icon" variant="ghost">
-              <MoreHorizontal className="h-4 w-4" />
-              <span className="sr-only">Toggle menu</span>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem>Edit</DropdownMenuItem>
-            <DropdownMenuItem>
-              <form action={deleteProduct}>
-                <button type="submit">Delete</button>
-              </form>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu> */}
-      </TableCell>
-    </TableRow>
-                    </TableBody>
-                </Table>
+									{PRODUCT_TITLES.map((title: string) => (
+										<TableCell key={title} className="font-medium">{product.name}</TableCell>
+									))}
+
+								</TableRow>
+							))}
+
+							<TableRow>
+
+      					<TableCell className="hidden sm:table-cell">
+						</TableCell>
+						<TableCell className="font-medium">Light</TableCell>
+						<TableCell>
+							{/* <Badge variant="outline" className="capitalize"> */}
+							Active
+							{/* </Badge> */}
+						</TableCell>
+						{/* <TableCell className="hidden md:table-cell">{`$20`}</TableCell> */}
+						{/* <TableCell className="hidden md:table-cell">25</TableCell> */}
+						<TableCell className="hidden md:table-cell">
+							12-30-33
+						</TableCell>
+						<TableCell>
+							{/* <DropdownMenu>
+							<DropdownMenuTrigger asChild>
+								<Button aria-haspopup="true" size="icon" variant="ghost">
+								<MoreHorizontal className="h-4 w-4" />
+								<span className="sr-only">Toggle menu</span>
+								</Button>
+							</DropdownMenuTrigger>
+							<DropdownMenuContent align="end">
+								<DropdownMenuLabel>Actions</DropdownMenuLabel>
+								<DropdownMenuItem>Edit</DropdownMenuItem>
+								<DropdownMenuItem>
+								<form action={deleteProduct}>
+									<button type="submit">Delete</button>
+								</form>
+								</DropdownMenuItem>
+							</DropdownMenuContent>
+							</DropdownMenu> */}
+						</TableCell>
+						</TableRow>
+
+						<TableRow>
+						<TableCell className="hidden sm:table-cell">
+							{/* <Image
+							alt="Product image"
+							className="aspect-square rounded-md object-cover"
+							height="64"
+							src={product.imageUrl}
+							width="64"
+							/> */}
+						</TableCell>
+						<TableCell className="font-medium">Light</TableCell>
+						<TableCell>
+							{/* <Badge variant="outline" className="capitalize"> */}
+							Active
+							{/* </Badge> */}
+						</TableCell>
+						{/* <TableCell className="hidden md:table-cell">{`$20`}</TableCell> */}
+						{/* <TableCell className="hidden md:table-cell">25</TableCell> */}
+						<TableCell className="hidden md:table-cell">
+							12-30-33
+						</TableCell>
+						<TableCell>
+
+						<DropdownMenu>
+							<DropdownMenuTrigger asChild>
+								<Button aria-haspopup="true" size="icon" variant="ghost">
+									<DotsVerticalIcon  className="h-5 w-5 scale-115" />
+									<span className="sr-only">Toggle menu</span>
+								</Button>
+							</DropdownMenuTrigger>
+
+							<DropdownMenuContent align="end" className="bg-stone-50">
+								<DropdownMenuLabel>Actions</DropdownMenuLabel>
+								<DropdownMenuItem>Edit</DropdownMenuItem>
+								<DropdownMenuItem>Deactivate</DropdownMenuItem>
+								<DropdownMenuItem>Delete</DropdownMenuItem>
+							</DropdownMenuContent>
+
+							</DropdownMenu>
+						</TableCell>
+						</TableRow>
+                        </TableBody>
+                    </Table>
+                </div>
             </CardContent>
             <CardFooter>
                 <form className="flex items-center w-full justify-between">

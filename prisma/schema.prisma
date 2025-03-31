@@ -18,3 +18,16 @@ model User {
   password  String   // Store the user's hashed password
   createdAt DateTime @default(now())              // Automatically set to current timestamp
 }
+
+//Define the File model
+model File {
+  id        String   @id @default(uuid()) // Unique file ID
+  fileName      String   @unique   // Original file name
+  originalName String? // File name when uploaded
+  filePath       String   @unique // File path or cloud storage URL
+  size      Int      // File size in bytes
+  type      String   // MIME type (e.g., image/png, application/pdf)
+  createdAt DateTime @default(now()) // Timestamp
+  isVisible Boolean @default(true)
+  
+}
