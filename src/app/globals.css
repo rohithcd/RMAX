@@ -110,3 +110,17 @@ input[type="search"]::-ms-clear {
 .bg-muted\/40 {
 	background-color: hsl(210, 40%, 96.1%, .4);
 }
+
+
+/*--------------- Fonts ---------------*/
+.f-primary {
+	font-family: var(--font-archivo), sans-serif;
+}
+
+.f-secondary {
+	font-family: var(--font-manrope), sans-serif;
+}
+
+.text-c-black {
+	color: #262626;
+}

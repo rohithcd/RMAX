@@ -1,20 +1,24 @@
 // Importing built-in dependencies
 import type { Metadata } from "next";
-//import { Geist, Geist_Mono } from "next/font/google";
+import { Manrope, Archivo } from "next/font/google";
 
 // Importing global styles
 import "./globals.css";
 
 // Configuring global fonts
-/*const geistSans = Geist({
-	variable: "--font-geist-sans",
+const manrope = Manrope({
 	subsets: ["latin"],
+	weight: ["400", "500", "600", "700"],
+	variable: "--font-manrope",
 });
 
-const geistMono = Geist_Mono({
-	variable: "--font-geist-mono",
+const archivo = Archivo({
 	subsets: ["latin"],
-});*/
+	weight: ["400", "500", "600", "700"],
+	variable: "--font-archivo",
+});
+
+
 
 // Configuring global page metadata
 export const metadata: Metadata = {
@@ -26,8 +30,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
 	return (
 		<html lang="en">
 			<body
-				//className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-				className="antialiased"
+				className={`${archivo.variable} ${manrope.variable} antialiased`}
 			>
 				{children}
 			</body>

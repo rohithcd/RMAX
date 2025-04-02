@@ -5,6 +5,9 @@ import { PrismaClient, User } from '@prisma/client';
 import { JWT } from "next-auth/jwt";
 import bcrypt from "bcryptjs";
 
+// Importing contants
+import { RMAX_LOGO } from "@/config/constants";
+
 
 const authOptions: AuthOptions = {
     providers: [
@@ -90,7 +93,7 @@ const authOptions: AuthOptions = {
     theme: {
         colorScheme: "light", // "auto" | "dark" | "light"
         brandColor: "#ff0000", // Hex color code
-        logo: '/images/rmax-logo.png', // Absolute URL to image
+        logo: RMAX_LOGO, // Absolute URL to image
         buttonText: "#FF0000" // Hex color code
     }
 };
