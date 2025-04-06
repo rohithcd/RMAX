@@ -124,3 +124,17 @@ input[type="search"]::-ms-clear {
 .text-c-black {
 	color: #262626;
 }
+
+
+/*--------------- Colors ---------------*/
+.bg-color-primary {
+	background-color: #BE1B1B;
+}
+
+.color-primary {
+	color: #BE1B1B;
+}
+
+/*========================================
+-------------- SCREEN STYLES -------------
+==========================================*/

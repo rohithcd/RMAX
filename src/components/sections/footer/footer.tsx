@@ -12,7 +12,7 @@ import { FOOTER_CONTENTS } from '@/config/constants';
 
 const Footer = () => {
     return (
-        <footer className="flex flex-col items-center max-w-6xl mx-auto py-4">
+        <footer className="flex flex-col items-center max-w-6xl mx-auto py-4 px-4">
             <div className="flex justify-between items-start w-full my-4">
                 <div className="flex flex-col gap-2 w-1/5">
                     <Image src={RMAX_LOGO} alt="RMAX Logo" width={150} height={78} className="pointer-events-none"/>
@@ -49,7 +49,7 @@ const Footer = () => {
                     </ul>
 
                     {/* Section - Information */}
-                    <div className="max-w-52">
+                    <div className="max-w-48">
                         <h5 className={`${styles['color-red']} text-lg font-semibold mb-2`}>Information</h5>
 
                         {/* Sub Section - Location */}
@@ -59,7 +59,7 @@ const Footer = () => {
                                 <h6>Location</h6>
                             </span>
 
-                            <p className={`${styles['color-grey']} pl-8 text-xs f-manrope`}>
+                            <p className={`${styles['color-grey']} pl-8 text-xs f-manrope text-justify`}>
                                 <strong className={styles['color-dark-grey']}>Head Office (HK): </strong>
                                 4, 16/F, HoKing Commercial Centre, Fayuen St, Kowloon Hong Kong<br/>
                                 <strong className={styles['color-dark-grey']}>(UAE): </strong> RMAX Middle East FZE Jumeirah Business Center 
@@ -91,8 +91,6 @@ const Footer = () => {
                             </p>
                         </div>
 
-
-                        
                     </div>
 
 

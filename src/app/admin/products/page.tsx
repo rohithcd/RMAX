@@ -22,7 +22,7 @@ import {
     DropdownMenuTrigger
   } from '@/components/ui/dropdownMenu/dropdownMenu';
 
-import { Button } from "@/components/ui/Button/Button";
+import { Button } from "@/components/ui/admin-button/button";
 
 //Constants
 

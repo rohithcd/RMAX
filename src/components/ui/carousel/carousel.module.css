@@ -1,0 +1,10 @@
+.embla__container {
+    height: 100vh; /* Fallback for browsers that do not support Custom Properties */
+    height: calc((var(--vh, 1vh) * 100) - 85px);
+}
+
+.embla__slide {
+    flex: 0 0 100%;
+    min-width: 0;
+}
+  

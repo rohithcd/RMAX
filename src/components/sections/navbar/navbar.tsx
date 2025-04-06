@@ -3,6 +3,7 @@ import React from 'react';
 import Image from 'next/image';
 import { RMAX_LOGO } from '@/config/constants';
 import Link from 'next/link';
+import Button from '@/components/ui/button/button';
 
 const options = [
     {name: 'Home', link: '/'},
@@ -17,7 +18,7 @@ const options = [
 
 const Navbar = () => {
     return ( 
-        <nav className="flex justify-between items-center max-w-6xl mx-auto py-4">
+        <nav className="flex justify-between items-center max-w-6xl mx-auto py-4 px-4">
             <Image src={RMAX_LOGO} alt="RMAX Logo" width={80} height={42} />
 
             <ul className="flex gap-4">
@@ -28,7 +29,7 @@ const Navbar = () => {
                 ))}
             </ul>
 
-            <button>Order Now</button>
+            <Button name="Call us"></Button>
 
         </nav>
     )
