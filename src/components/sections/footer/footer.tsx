@@ -39,14 +39,15 @@ const Footer = () => {
 
                     </ul>
 
-                    <ul>
+                    <div>
                         <h5 className={`${styles['color-red']} text-lg font-semibold mb-2`}>Our Stores</h5>
 
-                        {FOOTER_CONTENTS.ourStores.map((link) => (
-                            <li key={link.name} className="list-disc text-sm ml-4 leading-6">{link.name}</li>
-                        ))}
-
-                    </ul>
+                        <div className="grid grid-cols-3 gap-1">
+                            {FOOTER_CONTENTS.ourStores.map((link) => (
+                                <Image key={link.name} src={link.flag} width="52" height="35" alt="Flag"/>
+                            ))}
+                        </div>
+                    </div>
 
                     {/* Section - Information */}
                     <div className="max-w-48">
