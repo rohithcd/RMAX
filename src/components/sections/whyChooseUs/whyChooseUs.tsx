@@ -5,6 +5,9 @@ import Image from 'next/image';
 // Importing components
 import Button from '@/components/ui/button/button';
 
+// Importing constants
+import { WHY_CHOOSE_US_CONTENTS as contents } from '@/config/constants';
+
 // Importing styles
 import styles from './whyChooseUs.module.css';
 
@@ -13,33 +16,24 @@ interface BoxProps {
     description: string;
 }
 
-/* CTA */
-
-/* position: absolute;
-width: 685px;
-height: 456px;
-left: 255px;
-top: 1118px;
-
-filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25)); */
-
 const WhyChooseUs = () => {
     return ( 
-        <section className="max-w-6xl mx-auto py-16 flex justify-between gap-4">
-            <figure className="relative h-[300px] w-[460px] rounded-2xl overflow-hidden shadow-lg">
+        <section className="section section-margin py-1 flex justify-between gap-4">
+            <figure className="relative h-[340px] w-[720px] rounded-2xl overflow-hidden shadow-lg">
                 <Image src="/images/why-choose-us.png" alt="Why Choose Us" fill={true} className="object-cover" />
                 <figcaption className="absolute z-2 p-10">
-                    <h2 className="f-primary text-5xl font-medium text-stone-50">Brand Profile Cuts Today!</h2>
-                    <p className="text-stone-50 text-sm font-thin mt-4">with just few clicks, you&apos;ll unlock a world of illuminetuon and satisfaction delivered straight to your doorstep.</p>
-                    <Button className="mt-4" name="Call Us"></Button>
+                    <h2 className="f-primary text-5xl font-semibold text-stone-50">{contents.title}</h2>
+                    <p className="text-stone-50 text-sm font-thin mt-4">{contents.description}</p>
+                    <Button className="mt-4" href={contents.buttonHref} name={contents.buttonName}></Button>
                 </figcaption>
             </figure>
 
             <div className="grid grid-cols-2 gap-4">
-                <Box title="Premium Quality" description="Engineered for durability and superior performance." />
-                <Box title="Premium Quality" description="Engineered for durability and superior performance." />
-                <Box title="Premium Quality" description="Engineered for durability and superior performance." />
-                <Box title="Premium Quality" description="Engineered for durability and superior performance." />
+                {
+                    contents.cardContents.map((item, index) => (
+                        <Box key={index} title={item.title} description={item.description} />
+                    ))
+                }
             </div>
         </section>
     )

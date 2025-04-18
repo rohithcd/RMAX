@@ -18,7 +18,7 @@ const options = [
 
 const Navbar = () => {
     return ( 
-        <nav className="flex justify-between items-center max-w-6xl mx-auto py-4 px-4">
+        <nav className="section flex justify-between items-center py-4">
             <Image src={RMAX_LOGO} alt="RMAX Logo" width={80} height={42} />
 
             <ul className="flex gap-4">

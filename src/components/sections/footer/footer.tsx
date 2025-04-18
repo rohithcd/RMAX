@@ -12,7 +12,7 @@ import { FOOTER_CONTENTS } from '@/config/constants';
 
 const Footer = () => {
     return (
-        <footer className="flex flex-col items-center max-w-6xl mx-auto py-4 px-4">
+        <footer className="section flex flex-col items-center my-4">
             <div className="flex justify-between items-start w-full my-4">
                 <div className="flex flex-col gap-2 w-1/5">
                     <Image src={RMAX_LOGO} alt="RMAX Logo" width={150} height={78} className="pointer-events-none"/>
