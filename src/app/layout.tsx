@@ -8,13 +8,13 @@ import "./globals.css";
 // Configuring global fonts
 const manrope = Manrope({
 	subsets: ["latin"],
-	weight: ["400", "500", "600", "700"],
+	weight: ["200", "400", "500", "600", "700"],
 	variable: "--font-manrope",
 });
 
 const archivo = Archivo({
 	subsets: ["latin"],
-	weight: ["400", "500", "600", "700"],
+	weight: ["200", "400", "500", "600", "700"],
 	variable: "--font-archivo",
 });
 
