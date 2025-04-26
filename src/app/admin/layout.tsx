@@ -2,15 +2,13 @@
 import type { Metadata } from 'next';
 
 // Importing components
-import SessionWrapper from '@/components/sessionWrapper/sessionWrapper';
-//import ProtectedPage from '@/components/protectedPage/protectedPage';
-import UserDropdown from '@/components/ui/userDropdown/userDropdown';
-import Sidebar from '@/components/ui/sidebar/sidebar';
+import SessionWrapper from '@/layout/SessionWrapper';
+//import ProtectedPage from '@/layout/ProtectedPage';
+import AdminWrapper from '@/layout/AdminWrapper';
 
-
-//const inter = Inter({ subsets: ['latin'] })
-//import { Inter } from 'next/font/google'
-//import './globals.css'
+// Importing context providers
+import { ThemeProvider } from '@/context/ThemeContext';
+import { SidebarProvider } from '@/context/SidebarContext';
 
 // Configuring admin page metadata
 export const metadata: Metadata = {
@@ -22,19 +20,15 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     return (
         <SessionWrapper>
             {/* <ProtectedPage> */}
-                <main className="flex min-h-screen w-full flex-col bg-muted/40">
-                    <Sidebar />
-                    <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
-                        <header className="sticky top-0 z-30 flex h-14 items-center justify-end gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
-                            {/* <MobileNav /> */}
-                            <UserDropdown/>
-                        </header>
-                        <section className="grid flex-1 items-start gap-2 p-4 sm:px-6 sm:py-0 md:gap-4 bg-muted/40">
+                <ThemeProvider>
+                    <SidebarProvider>
+                        <AdminWrapper>
                             {children}
-                        </section>
-                    </div>
-                </main>
+                        </AdminWrapper>
+                    </SidebarProvider>
+                </ThemeProvider>
             {/* </ProtectedPage> */}
         </SessionWrapper>
+
     )
 }

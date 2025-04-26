@@ -18,8 +18,6 @@ const archivo = Archivo({
 	variable: "--font-archivo",
 });
 
-
-
 // Configuring global page metadata
 export const metadata: Metadata = {
 	title: "RMAX",
