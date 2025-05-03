@@ -1,7 +1,8 @@
 // Define the datasource for PostgreSQL
 datasource db {
-  provider = "postgresql"  // PostgreSQL database
-  url      = env("DATABASE_URL")  // Connection URL from the .env file
+  provider     = "postgresql" // PostgreSQL database
+  url          = env("DATABASE_URL") // Connection URL from the .env file
+  relationMode = "prisma"
 }
 
 // Define the Prisma client generator
@@ -12,22 +13,46 @@ generator client {
 // Define the User model
 model User {
   id        Int      @id @default(autoincrement()) // Auto incrementing primary key
-  name String   @map("name")            // Map to "first_name" column
-  username  String   @unique             // Map to "last_name" column
-  email     String                       // Unique email
-  password  String   // Store the user's hashed password
-  createdAt DateTime @default(now())              // Automatically set to current timestamp
+  name      String   @map("name") // Map to "first_name" column
+  username  String   @unique // Map to "last_name" column
+  email     String // Unique email
+  password  String // Store the user's hashed password
+  createdAt DateTime @default(now()) // Automatically set to current timestamp
 }
 
 //Define the File model
 model File {
-  id        String   @id @default(uuid()) // Unique file ID
-  fileName      String   @unique   // Original file name
+  id           String   @id @default(uuid()) // Unique file ID
+  fileName     String   @unique // Original file name
   originalName String? // File name when uploaded
-  filePath       String   @unique // File path or cloud storage URL
-  size      Int      // File size in bytes
-  type      String   // MIME type (e.g., image/png, application/pdf)
+  filePath     String   @unique // File path or cloud storage URL
+  size         Int // File size in bytes
+  type         String // MIME type (e.g., image/png, application/pdf)
+  createdAt    DateTime @default(now()) // Timestamp
+  isVisible    Boolean  @default(true)
+}
+
+//Define the Product model
+model Product {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  category    Category @relation(fields: [categoryId], references: [id])
+  categoryId  String
+  subCategory Tag[]
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now()) // Timestamp
+}
+
+model Category {
+  id        String    @id @default(uuid())
+  name      String    @unique
+  createdAt DateTime  @default(now()) // Timestamp
+  products   Product[]
+}
+
+model Tag {
+  id        String   @id @default(uuid())
+  name      String   @unique
   createdAt DateTime @default(now()) // Timestamp
-  isVisible Boolean @default(true)
-  
+  products Product[]
 }

@@ -7,7 +7,7 @@ import Link from "next/link";
 
 // Importing custom components
 import NotificationDropdown from "@/components/ui/notificationDropdown/NotificationDropdown";
-import UserDropdown from "@/components/ui/userDropdown/UserDropdown";
+import UserDropdown from "@/components/ui/userDropdown/userDropdown";
 import { ThemeToggleButton } from "@/components/common/ThemeToggleButton";
 
 // Importing custom hooks

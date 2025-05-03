@@ -9,6 +9,7 @@ import AdminWrapper from '@/layout/AdminWrapper';
 // Importing context providers
 import { ThemeProvider } from '@/context/ThemeContext';
 import { SidebarProvider } from '@/context/SidebarContext';
+import { AlertProvider } from '@/context/AlertContext';
 
 // Configuring admin page metadata
 export const metadata: Metadata = {
@@ -22,13 +23,14 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             {/* <ProtectedPage> */}
                 <ThemeProvider>
                     <SidebarProvider>
-                        <AdminWrapper>
-                            {children}
-                        </AdminWrapper>
+                        <AlertProvider>
+                            <AdminWrapper>
+                                {children}
+                            </AdminWrapper>
+                        </AlertProvider>
                     </SidebarProvider>
                 </ThemeProvider>
             {/* </ProtectedPage> */}
         </SessionWrapper>
-
     )
 }

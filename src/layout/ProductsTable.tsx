@@ -1,29 +1,84 @@
 "use client"
 
 // Importing built-in dependencies
-import React, { useEffect } from "react";
+import React from "react";
 
 // Importing components
 import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table";
 import Badge from "@/components/ui/badge/Badge"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "@/components/ui/dropdownMenu/dropdownMenu";
+import { DotsVerticalIcon } from "@radix-ui/react-icons";
+import { deleteRecord, updateRecord } from "@/utils/frontend/api";
+
+import { useAlert } from "@/context/AlertContext";
 
 interface ProductProps {
+	id: string;
 	name: string;
-	category: string;
-	subCategory: string;
-	status: "Active" | "Deactive";
+	//category: string;
+	//subCategory: string;
+	isActive: boolean;
 }
 
 interface ProductTableProps {
 	data: ProductProps[];
 }
 
-const productKeys: (keyof ProductProps)[] = ["name", "category", "subCategory", "status"];
+const productKeys: (keyof ProductProps)[] = ["name", "isActive"];
 
 export default function ProductsTable({ data }: ProductTableProps) {
-	useEffect(() => {
+	const [products, setProducts] = React.useState<ProductProps[]>(data);
+	const { showAlert } = useAlert();
 
-	}, [])
+	async function handleStatus(event: React.MouseEvent<HTMLDivElement>) {
+		const userConfirmed = await showAlert({
+			title: 'Confirm Action',
+			message: 'Are you sure you want to perform this action?',
+			type: 'warning',
+			confirmText: 'Yes, proceed',
+			cancelText: 'No, cancel',
+		  });
+
+
+		/*const { index } = (event.target as HTMLDivElement).dataset;
+		if(!index) return;
+
+		const record = products[Number(index)];
+		if(!record) return;
+
+		const recordToUpdate = { isActive: !record.isActive, id: record.id }
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		const [_, error] = await updateRecord({ record: recordToUpdate, object: "product" });
+
+		if(error) { console.log('Error:', error)}
+
+		setProducts((prev) => {
+			const updatedProducts = [...prev];
+			updatedProducts[Number(index)] = { ...updatedProducts[Number(index)], isActive: !record.isActive };
+			return updatedProducts;
+		});*/
+	}
+
+	async function handleDelete(event: React.MouseEvent<HTMLDivElement>) {
+		const { index } = (event.target as HTMLDivElement).dataset;
+		if(!index) return;
+
+		const record = products[Number(index)];
+		if(!record) return;
+
+		const recordToDelete = { id: record.id };
+
+		const [_, error] = await deleteRecord({ record: recordToDelete, object: "product" });
+
+		if(error) { console.log('Error:', error)}
+
+		setProducts((prev) => {
+			const updatedProducts = [...prev];
+			updatedProducts.splice(Number(index), 1);
+			return updatedProducts;
+		});
+	}
+
 	return (
 		<div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
 			<div className="max-w-full overflow-x-auto">
@@ -47,31 +102,57 @@ export default function ProductsTable({ data }: ProductTableProps) {
 
 						{/* Table Body */}
 						<TableBody className="divide-y divide-gray-100 dark:divide-white/[0.05]">
-							{Array.isArray(data) && data?.length > 0 ?
+							{Array.isArray(products) && products?.length > 0 ?
 
-								data.map((item, index) => (
+								products.map((item, index) => (
 									<TableRow key={index}>
 										{productKeys.map((key) => (
 											<TableCell
 												key={key}
 												className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400"
 											>
-												{key === "status" ? 
-												
-													<Badge
-													size="sm"
-													color="success"
-												>
-													{item[key]}
-												</Badge>
+												{(key === "isActive") ?
+													(item[key]) ?
+														<Badge
+															size="sm"
+															color="success"
+														>
+															Active
+														</Badge>
+
+														:
+
+														<Badge
+															size="sm"
+															color="error"
+														>
+															Deactive
+														</Badge>
 
 												:
-												item[key]
+													item[key]
 											
 												}
 												
 											</TableCell>
 										))}
+
+										<TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400 w-2">
+											<DropdownMenu>
+												<DropdownMenuTrigger asChild>
+													<DotsVerticalIcon  className="h-5 w-5 scale-115" />
+												</DropdownMenuTrigger>
+
+												<DropdownMenuContent align="end" className="bg-stone-50 dark:bg-gray-900 dark:border-gray-800">
+													<DropdownMenuLabel>Actions</DropdownMenuLabel>
+													<DropdownMenuItem>Edit</DropdownMenuItem>
+													<DropdownMenuItem onClick={handleStatus} data-id={item.id} data-index={index}>{item.isActive ? "Deactivate" : "Activate"}</DropdownMenuItem>
+													<DropdownMenuItem onClick={handleDelete} data-id={item.id} data-index={index}>Delete</DropdownMenuItem>
+												</DropdownMenuContent>
+
+											</DropdownMenu> 
+										</TableCell>
+
 									</TableRow>
 								))
 
@@ -83,6 +164,8 @@ export default function ProductsTable({ data }: ProductTableProps) {
 									</TableCell>
 								</TableRow>
 							}
+
+
 						</TableBody>
 					</Table>
 				</div>

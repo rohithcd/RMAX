@@ -1,14 +1,35 @@
-"use client";
+// Importing built-in dependencies
+import { PrismaClient } from "@prisma/client";
 
 // Impoting custom components
 import PageBreadcrumb from "@/components/common/PageBreadCrumb";
 import ProductsTable from "@/layout/ProductsTable";
+import Alert from "@/components/components/ui/alert/Alert";
+import AlertBox from "@/components/ui/alertbox";
 
-export function ProductsPage() {
+interface ProductProps {
+	name: string;
+	category: string;
+	subCategory: string;
+	status: "Active" | "Deactive";
+}
+
+export async function ProductsPage() {
+	const prisma = new PrismaClient();
+
+	const products = await prisma.product.findMany({
+		include: {
+			subCategory: true,
+			category: true,
+		}
+	});
+
+	console.log('Products:', products);
+
 	return (
 		<>
 			<PageBreadcrumb pageTitle="Products" />
-			<ProductsTable data={[]} />
+			<ProductsTable data={products} />
 		</>
 	)
 }
