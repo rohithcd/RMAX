@@ -15,7 +15,7 @@ import TextCard from "@/components/ui/textCard/textCard";
 const HomePage: React.FC = () => {
 	return (
 		<>
-			<TopBanner title="About Us" subtitle="Home / About Us"/>
+			<TopBanner src="/images/aboutus-overlay.png" title="About Us" subtitle="Home / About Us"/>
 			<section className="section my-8">
 				<div className="mb-8">
 					<h3 className="text-3xl font-bold pb-2">About <span className="color-primary">RMAX</span></h3>
