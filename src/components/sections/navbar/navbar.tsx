@@ -3,16 +3,18 @@ import React from 'react';
 import Image from 'next/image';
 import { RMAX_LOGO } from '@/config/constants';
 import Link from 'next/link';
+
+// Importing components
 import Button from '@/components/ui/button/button';
 
 const options = [
     {name: 'Home', link: '/'},
-    {name: 'About Us', link: '/about'},
+    {name: 'About Us', link: '/aboutus'},
     {name: 'Solution', link: '/solution'},
     {name: 'Projects', link: '/projects'},
     {name: 'News', link: '/news'},
     {name: 'Products', link: '/products'},
-    {name: 'Why RMAX?', link: '/about'},
+    {name: 'Why RMAX?', link: '/why-rmax'},
     {name: 'Contact Us', link: '/contact-us'}
 ];
 

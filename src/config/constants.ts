@@ -42,7 +42,7 @@ export const HERO_CONTENTS = [
         img: '/images/carousel-image1.png',
         alt: 'Carousel Image 1',
         subHeading: 'LED Mastery',
-        title: 'The Ultimate <span style="color: #BE1B1B;">Luminance</span> <br/> Lover\'s Destination.',
+        title: 'The Ultimate <span class="color-primary">Luminance</span> <br/> Lover\'s Destination.',
         description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus maxime recusandae deserunt, omnis tempore, veritatis, id repudiandae ullam facilis dolorum sit quisquam tempora qui accusantium incidunt!',
         button: 'About Us',
         href: '/about'
@@ -73,8 +73,8 @@ export const FOOTER_CONTENTS = {
     description: 'RMAX is a leading innovator in the lighting industry, specializing in smart lighting solutions, energy-efficient systems, and modern electrical products.',
     quickLinks: [
         { name: 'Home', link: '/' },
-        { name: 'About Us', link: '/about' },
-        { name: 'Product', link: '/product' },
+        { name: 'About Us', link: '/about-us' },
+        { name: 'Product', link: '/products' },
         { name: 'Package', link: '/package' },
         { name: 'Blog', link: '/blog' },
         { name: 'Contact us', link: '/contact-us' }
