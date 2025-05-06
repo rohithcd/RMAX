@@ -10,6 +10,7 @@ import AboutUs from "@/components/sections/aboutUs/aboutUs";
 import Stats from "@/components/sections/stats";
 import Customers from "@/components/sections/customers";
 import Blog from "@/components/sections/blog/blog";
+import ProductTypes from "@/components/sections/productTypes";
 
 const HomePage: React.FC = () => {
 	return (
@@ -17,9 +18,11 @@ const HomePage: React.FC = () => {
 			<Hero/>
 			<WhyChooseUs/>
 			<AboutUs/>
+			<ProductTypes/>
 			<CTA/>
 			<Stats/>
 			<Customers/>
+			
 			<section className="section section-margin relative w-full h-[40rem] flex flex-col items-center justify-center">
 				<Image src="/icons/map.svg" alt="Homepage" fill={true}/>
 			</section>

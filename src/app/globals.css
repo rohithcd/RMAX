@@ -149,6 +149,10 @@ body {
   color: #585656;
 }
 
+.border-c-primary {
+  border-color: #BE1B1B;
+}
+
 .bg-color-grey {
   background-color: #585656;
 }
