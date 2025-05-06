@@ -47,8 +47,42 @@ const WhyRMAX: React.FC = () => {
                 <p className="text-sm color-grey mt-4">This foundation allows us to provide custom, high-quality, and cost-effective solutions with fast delivery worldwide.</p>
             </section>
 
-            <section className="section section-margin">
+            <section className="section section-margin flex justify-between gap-12">
+                <div className="flex flex-col justify-around py-6">
+                    <span>
+                        <h4 className="text-3xl font-bold">Our Professional Backbone</h4>
+                        <p className="text-xs color-grey">We boast a highly qualified R&D team with specialists in:</p>
 
+                    </span>
+                    <ul className="ml-4 leading-3">
+                        <li className="list-disc color-primary font-bold text-sm not-last:mb-1"><p className="color-grey">Optics & Light Engineering</p></li>
+                        <li className="list-disc color-primary font-bold text-sm not-last:mb-1"><p className="color-grey">Material & Thermal Sciences</p></li>
+                        <li className="list-disc color-primary font-bold text-sm not-last:mb-1"><p className="color-grey">Intelligent Controls</p></li>
+                        <li className="list-disc color-primary font-bold text-sm not-last:mb-1"><p className="color-grey">Product Design & Aesthetics</p></li>
+                    </ul>
+
+                    <p className="text-xs color-grey">Coupled with a 20+ member QC team, every product is tested for durability, efficiency, and safety—meeting international standards including CE, CB, and UL certifications.</p>
+                </div>
+
+                <figure className="bg-[#D9D9D9] w-[45rem] h-[18rem] rounded-2xl overflow-hidden">
+
+                </figure>
+            </section>
+
+            <section className="section section-margin">
+                <h3 className="text-4xl font-bold mb-2">Design that Connects with the Market</h3>
+                <p className="text-sm color-grey">RMAX launches new models quarterly, with customizable options across multiple price tiers. Our focus on trend-responsive, client-exclusive, and versatile product designs helps our partners maintain market edge.</p>
+            </section>
+
+            <section className="section section-margin flex justify-between gap-16">
+                <div className="flex flex-col justify-center py-6 px-10 max-w-[38rem]">
+                    <h4 className="text-3xl font-bold mb-2">Global Certifications <br/> You Can Trust</h4>
+                    <p className="text-xs color-grey">RMAX is deeply committed to continuous research and development in both product innovation and smart technology integration. Every RMAX product undergoes rigorous testing through independent, third-party laboratories and meets multiple international quality and safety certifications — including CE, CB, UL, and other region-specific standards — ensuring global compliance and trusted performance</p>
+                </div>
+
+                <figure className="bg-[#D9D9D9] w-[108rem] h-[18rem] rounded-2xl overflow-hidden">
+
+                </figure>
             </section>
 
         </>
@@ -127,5 +161,15 @@ const ImageCard: React.FC<ImageCardProps> = ({ src, caption}) => {
             <Image src={src} alt="Why RMAX card image" fill={true}/>
             <figcaption className="w-full absolute bottom-0 f-primary text-sky-50 text-lg py-8 px-6 align-bottom" style={{backgroundColor: "rgba(190, 27, 27, 0.7)"}}>{caption}</figcaption>
         </figure>
+    );
+}
+
+const TextCard: React.FC = ({ content }) => {
+    return (
+        <>
+            <div className="border-[#BE1B1B] bg-color-primary">
+                
+            </div>
+        </>
     );
 }
