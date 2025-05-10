@@ -3,16 +3,15 @@ import { PrismaClient } from "@prisma/client";
 
 // Impoting custom components
 import PageBreadcrumb from "@/components/common/PageBreadCrumb";
-import ProductsTable from "@/layout/ProductsTable";
-import Alert from "@/components/components/ui/alert/Alert";
-import AlertBox from "@/components/ui/alertbox";
+import ProductsLayout from "@/layout/ProductsLayout";
+//import { Modal } from "@/components/ui/modal";
 
-interface ProductProps {
+/*interface ProductProps {
 	name: string;
 	category: string;
 	subCategory: string;
 	status: "Active" | "Deactive";
-}
+}*/
 
 export async function ProductsPage() {
 	const prisma = new PrismaClient();
@@ -24,32 +23,19 @@ export async function ProductsPage() {
 		}
 	});
 
+	const categories = await prisma.category.findMany({});
+	const subCategories = await prisma.tag.findMany({});
+
 	console.log('Products:', products);
+	console.log('Categories:', categories);
+	console.log('Subcategories:', subCategories);
 
 	return (
 		<>
 			<PageBreadcrumb pageTitle="Products" />
-			<ProductsTable data={products} />
+			<ProductsLayout products={products} categories={categories} subCategories={subCategories}/>
 		</>
 	)
 }
 
 export default ProductsPage;
-
-
-/*<DropdownMenu>
-	<DropdownMenuTrigger asChild>
-		<Button aria-haspopup="true" size="icon" variant="ghost">
-			<DotsVerticalIcon  className="h-5 w-5 scale-115" />
-			<span className="sr-only">Toggle menu</span>
-		</Button>
-	</DropdownMenuTrigger>
-
-	<DropdownMenuContent align="end" className="bg-stone-50">
-		<DropdownMenuLabel>Actions</DropdownMenuLabel>
-		<DropdownMenuItem>Edit</DropdownMenuItem>
-		<DropdownMenuItem>Deactivate</DropdownMenuItem>
-		<DropdownMenuItem>Delete</DropdownMenuItem>
-	</DropdownMenuContent>
-
-	</DropdownMenu> */

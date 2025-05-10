@@ -15,18 +15,20 @@ import { useAlert } from "@/context/AlertContext";
 interface ProductProps {
 	id: string;
 	name: string;
-	//category: string;
-	//subCategory: string;
+	description: string;
+	category: Record<string, string>;
+	subCategory: Record<string, string>[];
 	isActive: boolean;
 }
 
 interface ProductTableProps {
 	data: ProductProps[];
+	onEdit: (product: ProductProps) => void;
 }
 
-const productKeys: (keyof ProductProps)[] = ["name", "isActive"];
+const productKeys: (keyof ProductProps)[] = ["name", "description", "category", "subCategory", "isActive"];
 
-export default function ProductsTable({ data }: ProductTableProps) {
+export default function ProductsTable({ data, onEdit }: ProductTableProps) {
 	const [products, setProducts] = React.useState<ProductProps[]>(data);
 	const { showAlert } = useAlert();
 
@@ -37,10 +39,11 @@ export default function ProductsTable({ data }: ProductTableProps) {
 			type: 'warning',
 			confirmText: 'Yes, proceed',
 			cancelText: 'No, cancel',
-		  });
+		});
 
+		if(!userConfirmed) return;
 
-		/*const { index } = (event.target as HTMLDivElement).dataset;
+		const { index } = (event.target as HTMLDivElement).dataset;
 		if(!index) return;
 
 		const record = products[Number(index)];
@@ -56,10 +59,20 @@ export default function ProductsTable({ data }: ProductTableProps) {
 			const updatedProducts = [...prev];
 			updatedProducts[Number(index)] = { ...updatedProducts[Number(index)], isActive: !record.isActive };
 			return updatedProducts;
-		});*/
+		});
 	}
 
 	async function handleDelete(event: React.MouseEvent<HTMLDivElement>) {
+		const userConfirmed = await showAlert({
+			title: 'Confirm Action',
+			message: 'Are you sure you want to perform this action?',
+			type: 'warning',
+			confirmText: 'Yes, proceed',
+			cancelText: 'No, cancel',
+		});
+
+		if(!userConfirmed) return;
+
 		const { index } = (event.target as HTMLDivElement).dataset;
 		if(!index) return;
 
@@ -68,7 +81,7 @@ export default function ProductsTable({ data }: ProductTableProps) {
 
 		const recordToDelete = { id: record.id };
 
-		const [_, error] = await deleteRecord({ record: recordToDelete, object: "product" });
+		const [, error] = await deleteRecord({ record: recordToDelete, object: "product" });
 
 		if(error) { console.log('Error:', error)}
 
@@ -77,6 +90,16 @@ export default function ProductsTable({ data }: ProductTableProps) {
 			updatedProducts.splice(Number(index), 1);
 			return updatedProducts;
 		});
+	}
+
+	function handleEdit(event: React.MouseEvent<HTMLDivElement>) {
+		const { index } = (event.target as HTMLDivElement).dataset;
+		if(!index) return;
+
+		const record = products[Number(index)];
+		if(!record) return;
+
+		onEdit(record);
 	}
 
 	return (
@@ -111,27 +134,29 @@ export default function ProductsTable({ data }: ProductTableProps) {
 												key={key}
 												className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400"
 											>
-												{(key === "isActive") ?
-													(item[key]) ?
-														<Badge
-															size="sm"
-															color="success"
-														>
-															Active
-														</Badge>
-
+												{(key === "category") ?
+													(item.category?.name) :
+													(key === "subCategory") ?
+														(item.subCategory?.map((subCat) => subCat.name).join(", ")) :
+													(key === "description") ?
+														(item[key] && item[key].length > 50 ? item[key].slice(0, 50) + "..." : item[key]) :
+													(key === "isActive") ?
+														(item[key] ? 
+															<Badge
+																size="sm"
+																color="success"
+															>
+																Active
+															</Badge> :
+															<Badge
+																size="sm"
+																color="error"
+															>
+																Deactive
+															</Badge>)
 														:
 
-														<Badge
-															size="sm"
-															color="error"
-														>
-															Deactive
-														</Badge>
-
-												:
-													item[key]
-											
+														item[key]
 												}
 												
 											</TableCell>
@@ -145,7 +170,7 @@ export default function ProductsTable({ data }: ProductTableProps) {
 
 												<DropdownMenuContent align="end" className="bg-stone-50 dark:bg-gray-900 dark:border-gray-800">
 													<DropdownMenuLabel>Actions</DropdownMenuLabel>
-													<DropdownMenuItem>Edit</DropdownMenuItem>
+													<DropdownMenuItem onClick={handleEdit} data-id={item.id} data-index={index}>Edit</DropdownMenuItem>
 													<DropdownMenuItem onClick={handleStatus} data-id={item.id} data-index={index}>{item.isActive ? "Deactivate" : "Activate"}</DropdownMenuItem>
 													<DropdownMenuItem onClick={handleDelete} data-id={item.id} data-index={index}>Delete</DropdownMenuItem>
 												</DropdownMenuContent>

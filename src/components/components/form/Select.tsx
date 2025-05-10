@@ -8,6 +8,7 @@ interface Option {
 interface SelectProps {
   options: Option[];
   placeholder?: string;
+  name?: string;
   onChange: (value: string) => void;
   className?: string;
   defaultValue?: string;
@@ -19,6 +20,7 @@ const Select: React.FC<SelectProps> = ({
   onChange,
   className = "",
   defaultValue = "",
+  name
 }) => {
   // Manage the selected value
   const [selectedValue, setSelectedValue] = useState<string>(defaultValue);
@@ -36,6 +38,7 @@ const Select: React.FC<SelectProps> = ({
           ? "text-gray-800 dark:text-white/90"
           : "text-gray-400 dark:text-gray-400"
       } ${className}`}
+      name={name}
       value={selectedValue}
       onChange={handleChange}
     >

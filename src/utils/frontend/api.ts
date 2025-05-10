@@ -59,8 +59,13 @@ const deleteRecord = async ({ record, object, requestParams }: ApiRequestProps):
     return (error) ? [null, error] : [data, null];
 };
 
+const createRecord = async ({ record, object, requestParams }: ApiRequestProps): Promise<ApiResponseProps> => {
+    const { data, error } = await submitRequest({ data: record, url: `/api/services/rest?object=${object}`, method: 'POST', requestHeaders: requestParams?.headers });
+    return (error) ? [null, error] : [data, null];
+}
 
 export {
     updateRecord,
-    deleteRecord
+    deleteRecord,
+    createRecord
 }

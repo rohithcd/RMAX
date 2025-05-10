@@ -3,23 +3,27 @@ import React from "react";
 interface TextareaProps {
   placeholder?: string; // Placeholder text
   rows?: number; // Number of rows
+  name?: string;
   value?: string; // Current value
   onChange?: (value: string) => void; // Change handler
   className?: string; // Additional CSS classes
   disabled?: boolean; // Disabled state
   error?: boolean; // Error state
   hint?: string; // Hint text to display
+  defaultValue?: string; // Default value for the textarea
 }
 
 const TextArea: React.FC<TextareaProps> = ({
   placeholder = "Enter your message", // Default placeholder
   rows = 3, // Default number of rows
-  value = "", // Default value
+  //value = "", // Default value
+  name, // Name attribute for the textarea
   onChange, // Callback for changes
   className = "", // Additional custom styles
   disabled = false, // Disabled state
   error = false, // Error state
   hint = "", // Default hint text
+  defaultValue = "", // Default value for the textarea
 }) => {
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (onChange) {
@@ -42,10 +46,12 @@ const TextArea: React.FC<TextareaProps> = ({
       <textarea
         placeholder={placeholder}
         rows={rows}
-        value={value}
+        name={name}
+        //value={value}
         onChange={handleChange}
         disabled={disabled}
         className={textareaClasses}
+        defaultValue={defaultValue}
       />
       {hint && (
         <p

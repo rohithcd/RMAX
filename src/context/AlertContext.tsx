@@ -57,7 +57,7 @@ export function AlertProvider({ children }: { children: React.ReactNode }) {
                 isOpen={alertState.isOpen}
                 title={alertState.options.title}
                 message={alertState.options.message}
-                type={alertState.options.type}
+                //type={alertState.options.type}
                 confirmText={alertState.options.confirmText}
                 cancelText={alertState.options.cancelText}
                 onConfirm={handleConfirm}
