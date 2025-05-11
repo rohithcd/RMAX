@@ -48,12 +48,11 @@ model Product {
   subCategory Tag[]     // Many-to-many relation with Tag
   isActive    Boolean   @default(true)
   createdAt   DateTime  @default(now()) // Timestamp
-  
+  description String    
   // Fixed relations - separate relations with different names
-  dataSheet   File      @relation("ProductDataSheet", fields: [dataSheetId], references: [id])
-  dataSheetId String
-  
-  // Fixed many-to-many relation
+  dataSheet   File?      @relation("ProductDataSheet", fields: [dataSheetId], references: [id])
+  dataSheetId String?
+
   images      File[]    @relation("ProductImages")
 }
 

@@ -14,7 +14,7 @@ import MultiSelect from "@/components/components/form/MultiSelect";
 import FileInput from "@/components/components/form/input/FileInput";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import Select from "@/components/components/form/Select";
-import { createRecord, updateRecord } from "@/utils/frontend/api";
+import { createRecord, updateRecord, uploadFiles } from "@/utils/frontend/api";
 
 import { useRouter } from "next/navigation";
 
@@ -71,48 +71,109 @@ export function ProductsPage({ products, categories, subCategories }: { products
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault(); // Prevent default form submission
-        
-        const formData = new FormData(event.currentTarget);
-        const recordData = {
-            name: formData.get("name") as string,
-            categoryId: formData.get("category") as string,
-            subCategory: {
-                set: subCategoryIds.map(id => ({ id })),
-            },
-            //price: Number(formData.get("price")),
-            // Sheet handling should be improved in a real implementation
-            // sheet: formData.get("sheet") as File | null
-        };
 
-        let result;
-        
-        if (isEditMode && currentProduct) {
-            // Update existing product
-            result = await updateRecord({ 
-                record: { 
-                    ...recordData, 
-                    id: currentProduct.id 
-                }, 
-                object: "product" 
-            });
-        } else {
-            // Create new product
-            result = await createRecord({ 
-                record: recordData, 
-                object: "product" 
-            });
+        try {
+            const form = event.currentTarget;
+            const formData = new FormData(form);
+            
+            // Extract basic record data
+            const recordData = {
+                name: formData.get("name") as string,
+                description: formData.get("description") as string
+                // Other fields as needed
+            };
+    
+            // Handle file uploads more effectively
+            const files: File[] = [];
+            
+            // Add sheet file if it exists and is valid
+            const sheetFile = formData.get("sheet") as File;
+            if (sheetFile && sheetFile.size > 0 && sheetFile.name) {
+                files.push(sheetFile);
+            }
+            
+            // Add image files using spread operator for better array handling
+            const imageFiles = formData.getAll("images") as File[];
+            if (imageFiles && imageFiles.length > 0) {
+                files.push(...imageFiles.filter(file => file.size > 0 && file.name));
+            }
+    
+            // Process file uploads first if there are files
+            let fileIds: string[] = [];
+            
+            if (files.length > 0) {
+                const [uploadResponse, uploadError] = await uploadFiles({ files });
+    
+                if (uploadError) {
+                    console.error("File upload error:", uploadError);
+                    // Show user-friendly error message
+                    // setError("Unable to upload files. Please try again.");
+                    return;
+                }
+    
+                // Extract file IDs from the response
+                if (uploadResponse?.files && Array.isArray(uploadResponse.files)) {
+                    console.log('File upload response');
+                    fileIds = uploadResponse.files.map(file => file.id);
+                }
+                
+                console.log("Uploaded files:", uploadResponse);
+            }
+    
+            // Get category ID with fallback
+            const categoryId = formData.get("category") as string;
+            
+            // Prepare the record data for creation/update
+            const recordPayload = {
+                ...recordData,
+                ...(categoryId ? {
+                    category: {
+                        connect: { id: categoryId }
+                    }
+                } : {}),
+                ...(subCategoryIds.length > 0 ? {
+                    subCategory: {
+                        [isEditMode ? 'set' : 'connect']: subCategoryIds.map(id => ({ id }))
+                    }
+                } : {}),
+                ...(fileIds.length > 0 ? {
+                    images: {
+                        connect: fileIds.map(id => ({ id }))
+                    }
+                } : {})
+            };
+    
+            // Create or update record
+            const [responseData, error] = await (isEditMode && currentProduct 
+                ? updateRecord({ 
+                    record: { ...recordPayload, id: currentProduct.id }, 
+                    object: "product" 
+                  })
+                : createRecord({ 
+                    record: recordPayload, 
+                    object: "product" 
+                  })
+            );
+    
+            if (error) {
+                console.error("API error:", error);
+                // Show user-friendly error message
+                // setError("Failed to save product. Please try again.");
+                return;
+            }
+    
+            // Success handling
+            console.log("Success:", responseData);
+            setIsModalOpen(false);
+            setSubCategoryIds([]);
+            
+            // Use shallow routing to refresh data without full page reload
+            //router.replace(router.asPath, undefined, { shallow: true });
+        } catch (error) {
+            console.error("Submission error:", error);
+            // Show user-friendly error message
+            // setError("An unexpected error occurred. Please try again.");
         }
-
-        const [, error] = result;
-
-        if (error) {
-            console.log("Error:", error);
-            return;
-        }
-
-        setIsModalOpen(false);
-        setSubCategoryIds([]);
-        router.replace('/admin/products'); // Refresh the page
     }
 
     function handleMultiSelectChange(e: Array<string>) {
@@ -233,6 +294,11 @@ export function ProductsPage({ products, categories, subCategories }: { products
                     <span>
                         <Label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-400">Product Sheet</Label>
                         <FileInput name="sheet"/>
+                    </span>
+
+                    <span>
+                        <Label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-400">Product Sheet</Label>
+                        <FileInput name="images"/>
                     </span>
 
                     <Button variant="primary" className="w-32">{submitButtonText}</Button>

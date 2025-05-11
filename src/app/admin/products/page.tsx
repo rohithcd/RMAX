@@ -20,6 +20,7 @@ export async function ProductsPage() {
 		include: {
 			subCategory: true,
 			category: true,
+			images: true
 		}
 	});
 

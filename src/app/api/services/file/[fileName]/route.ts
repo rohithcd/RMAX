@@ -7,10 +7,8 @@ import fs from 'fs';
 // Importing utility functions
 import { isAuthenticated } from '@/utils/backend/auth';
 
-
 // Prisma client singleton (to prevent multiple instances)
 const prisma = new PrismaClient();
-
 
 // GET /api/services/file/[fileName] or /api/services/file/[fileName]?action=download
 export async function GET(req: NextRequest) {

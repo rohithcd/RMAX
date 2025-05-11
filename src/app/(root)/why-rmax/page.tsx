@@ -4,6 +4,7 @@ import Image from "next/image";
 
 // Importing components
 import TopBanner from "@/components/sections/topBanner/topBanner";
+import Workflow from "@/components/sections/workflow";
 
 
 const WhyRMAX: React.FC = () => {
@@ -70,8 +71,25 @@ const WhyRMAX: React.FC = () => {
             </section>
 
             <section className="section section-margin">
-                <h3 className="text-4xl font-bold mb-2">Design that Connects with the Market</h3>
+                <h3 className="text-3xl font-bold mb-2">Design that Connects with the Market</h3>
                 <p className="text-sm color-grey">RMAX launches new models quarterly, with customizable options across multiple price tiers. Our focus on trend-responsive, client-exclusive, and versatile product designs helps our partners maintain market edge.</p>
+
+                <div className="my-6 flex justify-around">
+                    <TextCard content="Industry-driven designs"/>
+                    <TextCard content="Customer-exclusive collections"/>
+                    <TextCard content="Multi-style, multi-tier offerings"/>
+                </div>
+            </section>
+
+            <section className="section section-margin">
+                <h3 className="text-3xl font-bold mb-2">Health-Conscious Lighting</h3>
+                <p className="text-sm color-grey">We prioritize visual comfort and human health in every solution:</p>
+
+                <div className="my-6 flex justify-around">
+                    <TextCard content="High CRI"/>
+                    <TextCard content="Flicker-free Performance"/>
+                    <TextCard content="Anti-glare design"/>
+                </div>
             </section>
 
             <section className="section section-margin flex justify-between gap-16">
@@ -84,6 +102,8 @@ const WhyRMAX: React.FC = () => {
 
                 </figure>
             </section>
+
+            <Workflow />
 
         </>
     );
@@ -164,12 +184,12 @@ const ImageCard: React.FC<ImageCardProps> = ({ src, caption}) => {
     );
 }
 
-const TextCard: React.FC = ({ content }) => {
+const TextCard = ({ content }: {content: string}) => {
     return (
         <>
-            <div className="border-[#BE1B1B] bg-color-primary">
-                
-            </div>
+            <span className="border-[#BE1B1B] flex items-center justify-center border-2 px-5 py-3 rounded-lg color-primary font-bold w-[16rem] text-center">
+                {content}
+            </span>
         </>
     );
 }
