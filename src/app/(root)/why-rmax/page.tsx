@@ -105,6 +105,59 @@ const WhyRMAX: React.FC = () => {
 
             <Workflow />
 
+            <section className="section section-margin">
+                <h4 className="text-3xl font-bold">More Than Just Products – Complete Solutions</h4>
+                <p className="text-xs color-grey">RMAX is a total solution provider—not just a product vendor We cater to projects across residential, commercial, and industrial sectors, adapting solutions based on budget, style, and local standards We offer:</p>
+
+                <div className="grid grid-cols-3 gap-4 mt-6">
+                    <GreyCard content="Lighting Proposals"/>
+                    <GreyCard content="CAD Layouts"/>
+                    <GreyCard content="Renderings"/>
+                    <GreyCard content="Assembly Guides"/>
+                    <GreyCard content="Product Videos, Catalogs & Sales Kits"/>
+                    <GreyCard content="After-Sales support"/>
+                </div>
+            </section>
+
+            <section className="section section-margin">
+                <h4 className="text-3xl font-bold">Global Presence</h4>
+                <p className="text-xs color-grey">RMAX is proudly active in:</p>
+
+                <div className="grid gap-10 justify-items-center">
+                    <FlagSection src="/images/flags/saudi.png" caption="Saudi Arabia" subcaption="HeadQuarters & Distribution"/>
+                    
+                    <div className="flex justify-center gap-6">
+                        <FlagSection src="/images/flags/china.png" caption="China" subcaption="Manufacturing & R&D"/>
+                        <FlagSection src="/images/flags/hongkong.png" caption="Hong Kong" subcaption="Export Office"/>
+                    </div>
+
+                    <div className="flex justify-center gap-6">
+                        <FlagSection src="/images/flags/india.png" caption="India"/>
+                        <FlagSection src="/images/flags/uae.png" caption="UAE"/>
+                        <FlagSection src="/images/flags/oman.png" caption="Oman"/>
+                        <FlagSection src="/images/flags/egypt.png" caption="Egypt"/>
+                        <FlagSection src="/images/flags/bahrain.png" caption="Bahrain"/>
+                        <FlagSection src="/images/flags/qatar.png" caption="Qatar"/>
+                    </div>
+                    
+                </div>
+
+            </section>
+
+            <section className="section section-margin">
+                <h4 className="text-3xl font-bold">Supporting Our Distributors</h4>
+                
+                <div className="grid grid-cols-3 justify-items-center gap-10 mt-6">
+                    <LargeTextCard title="Fast Delivery" subtitle="Warehouses in KSA, China, and UAE"/>
+                    <LargeTextCard title="No MOQ" subtitle="On standard stock items for projects"/>
+                    <LargeTextCard title="Full Project Support" subtitle="From product selection to layout and rendering"/>
+                    <LargeTextCard title="Custom Solutions" subtitle="For exclusive or complex project needs"/>
+                    <LargeTextCard title="On-site & Remote Tech Support" subtitle="On standard stock items for projects"/>
+                    <LargeTextCard title="Professional Sales Team" subtitle="Ready to respond and resolve quickly"/>
+                </div>
+                
+            </section>
+
         </>
     );
 };
@@ -191,5 +244,39 @@ const TextCard = ({ content }: {content: string}) => {
                 {content}
             </span>
         </>
+    );
+}
+
+const LargeTextCard = ({ title, subtitle }: {title: string, subtitle: string}) => {
+    return (
+        <>
+            <span className="border-[#BE1B1B] flex flex-col items-center justify-center border-2 px-5 py-3 rounded-lg color-primary w-[18rem] h-[8rem] text-center bg-[#FFD9D9]">
+                <h6 className="text-xl font-semibold">{title}</h6>
+                <p className="text-xs">{subtitle}</p>
+            </span>
+        </>
+    );
+}
+
+const GreyCard = ({ content }: {content: string}) => {
+    return (
+        <>
+            <span className="flex items-center justify-center px-5 py-3 rounded-lg text-xl f-primary font-bold h-[8rem] text-center bg-[#D9D9D9]">
+                {content}
+            </span>
+        </>
+    );
+}
+
+const FlagSection = ({ src, caption, subcaption }: {src: string, caption: string, subcaption?: string}) => {
+    return (
+        <div className="w-42 h-25 mt-6">
+            <figure className="relative w-full h-full">    
+                <Image src={src} alt="Country flag" fill={true}/>
+            </figure>
+            <p className="text-sm font-bold text-center">{caption}</p>
+            <p className="text-xs color-grey text-center">{subcaption}</p>
+        </div>
+
     );
 }
