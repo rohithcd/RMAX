@@ -61,6 +61,11 @@ const HomePage: React.FC = () => {
 					/>
 				))}
 			</section>
+
+			<section className="section flex flex-col items-center justify-center section-margin bg-[#D9D9D9] w-full h-[18rem] text-center">
+				<h4 className="color-primary text-2xl font-bold mb-2">Our Future Outlook</h4>
+				<p className="text-sm color-grey">Our ambition is to expand globally, delivering smarter, energy-efficient solutions to more markets. We aim to be a trusted partner in lighting, energy management, and automation, offering affordable innovation for homes, businesses, and large-scale projects worldwide.</p>
+			</section>
 		</>
 	);
 };
