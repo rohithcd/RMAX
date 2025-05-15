@@ -9,7 +9,7 @@ import Button from '@/components/ui/button/button';
 
 const options = [
     {name: 'Home', link: '/'},
-    {name: 'About Us', link: '/aboutus'},
+    {name: 'About Us', link: '/about-us'},
     {name: 'Solution', link: '/solution'},
     {name: 'Projects', link: '/projects'},
     {name: 'News', link: '/news'},

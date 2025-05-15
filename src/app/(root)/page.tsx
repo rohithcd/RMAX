@@ -11,6 +11,8 @@ import Stats from "@/components/sections/stats";
 import Customers from "@/components/sections/customers";
 import Blog from "@/components/sections/blog/blog";
 import ProductTypes from "@/components/sections/productTypes";
+import LogoCarousel from "@/components/sections/logoCarousel";
+import HomeProducts from "@/components/sections/homeProducts";
 
 const HomePage: React.FC = () => {
 	return (
@@ -18,11 +20,13 @@ const HomePage: React.FC = () => {
 			<Hero/>
 			<WhyChooseUs/>
 			<AboutUs/>
+			<LogoCarousel/> {/* update:Red banner needs to be smaller, first section moves left, second section moves right */} 
 			<ProductTypes/>
 			<CTA/>
+			<HomeProducts/>
 			<Stats/>
-			<Customers/>
-			
+			<Customers/> {/*update:No need - Naseef confirmed */}
+
 			<section className="section section-margin relative w-full h-[40rem] flex flex-col items-center justify-center">
 				<Image src="/icons/map.svg" alt="Homepage" fill={true}/>
 			</section>

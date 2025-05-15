@@ -6,7 +6,7 @@ import PageBreadcrumb from "@/components/common/PageBreadCrumb";
 import BaseLayout from "@/layout/BaseLayout";
 
 
-export async function CategoryPage() {
+export default async function CategoryPage() {
     const prisma = new PrismaClient();
     const categories = await prisma.category.findMany({});
 
@@ -19,5 +19,3 @@ export async function CategoryPage() {
         </>
     )
 }
-
-export default CategoryPage;

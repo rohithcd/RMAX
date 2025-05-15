@@ -45,7 +45,7 @@ export const HERO_CONTENTS = [
         title: 'The Ultimate <span class="color-primary">Luminance</span> <br/> Lover\'s Destination.',
         description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus maxime recusandae deserunt, omnis tempore, veritatis, id repudiandae ullam facilis dolorum sit quisquam tempora qui accusantium incidunt!',
         button: 'About Us',
-        href: '/about'
+        href: '/about-us'
     },
 ];
 

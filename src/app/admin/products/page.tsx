@@ -13,7 +13,7 @@ import ProductsLayout from "@/layout/ProductsLayout";
 	status: "Active" | "Deactive";
 }*/
 
-export async function ProductsPage() {
+export default async function ProductsPage() {
 	const prisma = new PrismaClient();
 
 	const products = await prisma.product.findMany({
@@ -38,5 +38,3 @@ export async function ProductsPage() {
 		</>
 	)
 }
-
-export default ProductsPage;
