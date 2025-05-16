@@ -16,14 +16,15 @@ import { Label } from "@radix-ui/react-dropdown-menu";
 import Select from "@/components/components/form/Select";
 import { createRecord, updateRecord, uploadFiles } from "@/utils/frontend/api";
 
-import { useRouter } from "next/navigation";
+//import { useRouter } from "next/navigation";
 
 interface ProductProps {
     id: string;
     name: string;
     description: string;
-    category: Record<string, unknown>;
-    subCategory: Record<string, unknown>[];
+    category: CategoryProps;
+    categoryId: string;
+    subCategory: CategoryProps[];
     isActive: boolean;
 }
 
@@ -40,7 +41,7 @@ export function ProductsPage({ products, categories, subCategories }: { products
     const [isEditMode, setIsEditMode] = useState(false);
     const [currentProduct, setCurrentProduct] = useState<ProductProps | null>(null);
 
-    const router = useRouter();
+    //const router = useRouter();
 
     useEffect(() => {
         setProductCategory(() => {
@@ -185,7 +186,7 @@ export function ProductsPage({ products, categories, subCategories }: { products
 
         setCurrentProduct(product);
         setIsEditMode(true);
-        setSubCategoryIds(product.subCategory.map((subCat: any) => subCat.id)); // Assuming subCategory is an array of objects with an id property
+        setSubCategoryIds(product.subCategory.map((subCat: unknown) => (subCat as Record<string, string>).id)); // Assuming subCategory is an array of objects with an id property
     
 
         //setSubCategoryIds(); //

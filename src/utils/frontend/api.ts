@@ -14,7 +14,7 @@ interface ApiRequestParams {
 }
 
 type ApiResponseProps = [unknown, { type: string; message: string, record?: Record<string, unknown> } | null];
-type FileUploadResponse = [unknown, { type: string; message: string, files: Record<string, unknown>[] } | null];
+type FileUploadResponse = [Record<string, string> | null, { type: string; message: string } | null];
 
 interface submitRequestProps {
     data: Record<string, unknown> | Record<string, unknown>[] | FormData;
@@ -105,10 +105,12 @@ const uploadFiles = async ({ files, requestParams }: FileUploadProps): Promise<F
             requestHeaders: requestParams?.headers
         });
 
-        return (error) ? [null, error] : [data, null];
+        return (error) ? [null, error] : [data as Record<string, string>, null];
     } catch (error) {
         console.error('File upload failed:', error);
-        return [null, { type: 'File Upload Error', message: 'Failed to upload files' }];
+        return [null, {
+            type: 'File Upload Error', message: 'Failed to upload files',
+        }];
     }
 };
 

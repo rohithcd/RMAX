@@ -16,9 +16,15 @@ interface ProductProps {
 	id: string;
 	name: string;
 	description: string;
-	category: Record<string, string>;
-	subCategory: Record<string, string>[];
+	category: CategoryProps;
+	categoryId: string;
+	subCategory: CategoryProps[];
 	isActive: boolean;
+}
+
+interface CategoryProps {
+    id: string;
+    name: string;
 }
 
 interface ProductTableProps {
