@@ -38,6 +38,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.2.0",
+    "ngrok": "^5.0.0-beta.2",
     "prisma": "^6.4.1",
     "tailwindcss": "^4.0.15",
     "typescript": "^5"

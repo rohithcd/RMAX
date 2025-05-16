@@ -1,31 +1,31 @@
-// Importing dependencies
-//import { query } from '@/utils/backend/db-connect';
-import { PrismaClient } from '@prisma/client';
+// // Importing dependencies
+// //import { query } from '@/utils/backend/db-connect';
+// import { PrismaClient } from '@prisma/client';
 import { NextResponse } from 'next/server';
 
-// GET /api/users
+// // GET /api/users
 export async function GET() {
-	// try {
-	const prisma = new PrismaClient();
+// 	// try {
+// 	const prisma = new PrismaClient();
 
-	const users = await prisma.user.findMany();
+// 	const users = await prisma.user.findMany();
 
-	console.log('Users: ', users);
+// 	console.log('Users: ', users);
 	
 
-	// 	console.log('User: ' + users);
+// 	// 	console.log('User: ' + users);
 
-	// 	return NextResponse.json(users);
-	// } catch (err: unknown) {
-	// 	console.log('Error: ', err);
+// 	// 	return NextResponse.json(users);
+// 	// } catch (err: unknown) {
+// 	// 	console.log('Error: ', err);
 
 	return NextResponse.json(
-			{ message: users},
-			{ status: 500 }
+			{ message: 'users'},
+			{ status: 200 }
 		);
 }
 
-// POST /api/users
-export async function POST() {
+// // POST /api/users
+// export async function POST() {
 
-}
+// }

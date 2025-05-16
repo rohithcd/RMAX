@@ -1,5 +1,5 @@
 // Importing built-in dependencies
-import Link from 'next/link';
+//import Link from 'next/link';
 import React from 'react';
 
 // Importing components

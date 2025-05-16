@@ -120,7 +120,7 @@ export async function DELETE(req: NextRequest) {
 
         // Dynamically selecting the model
         // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
-        const model = prisma[objectName as keyof typeof prisma] as any;
+        const model = prisma[objectName as keyof typeof prisma] as { delete: Function };
 
         if (!model || typeof model.delete !== 'function') {
             return NextResponse.json({ message: 'Invalid object model.' }, { status: 400 });

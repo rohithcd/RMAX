@@ -6,7 +6,7 @@ import React from 'react';
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
-// eslint-disable-next-line @next/next/no-async-client-component
+
 const ProtectedPage = ({ children }: { children: React.ReactNode }) => {
     const router = useRouter();
     
