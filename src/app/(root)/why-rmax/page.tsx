@@ -6,6 +6,9 @@ import Image from "next/image";
 import TopBanner from "@/components/sections/topBanner/topBanner";
 import Workflow from "@/components/sections/workflow";
 
+// Importing styles
+import styles from "./whyrmax.module.css";
+
 
 const WhyRMAX: React.FC = () => {
     return (
@@ -37,7 +40,7 @@ const WhyRMAX: React.FC = () => {
                 <h3 className="text-4xl font-bold mb-2">Manufacturing Excellence</h3>
                 <p className="text-sm color-grey">Our state-of-the-art factory in China supports a fully integrated production process:</p>
 
-                <div className="grid grid-cols-2 gap-6">
+                <div className={`${styles['image-card-wrapper']} grid grid-cols-2 gap-6`}>
                     <ImageCard src="/images/why-rmax-card-overlay.png" caption="25,000 sqm facility"/>
                     <ImageCard src="/images/why-rmax-card-overlay.png" caption="30+ automated encapsulation lines"/>
                     <ImageCard src="/images/why-rmax-card-overlay.png" caption="High-speed SMT, welding & extrusion"/>
@@ -48,7 +51,7 @@ const WhyRMAX: React.FC = () => {
                 <p className="text-sm color-grey mt-4">This foundation allows us to provide custom, high-quality, and cost-effective solutions with fast delivery worldwide.</p>
             </section>
 
-            <section className="section section-margin flex justify-between gap-12">
+            <section className={`${styles['split-card-div2']} section section-margin flex justify-between gap-12`}>
                 <div className="flex flex-col justify-around py-6">
                     <span>
                         <h4 className="text-3xl font-bold">Our Professional Backbone</h4>
@@ -74,7 +77,7 @@ const WhyRMAX: React.FC = () => {
                 <h3 className="text-3xl font-bold mb-2">Design that Connects with the Market</h3>
                 <p className="text-sm color-grey">RMAX launches new models quarterly, with customizable options across multiple price tiers. Our focus on trend-responsive, client-exclusive, and versatile product designs helps our partners maintain market edge.</p>
 
-                <div className="my-6 flex justify-around">
+                <div className={`${styles['text-card-div']} my-6 flex justify-around`}>
                     <TextCard content="Industry-driven designs"/>
                     <TextCard content="Customer-exclusive collections"/>
                     <TextCard content="Multi-style, multi-tier offerings"/>
@@ -85,15 +88,15 @@ const WhyRMAX: React.FC = () => {
                 <h3 className="text-3xl font-bold mb-2">Health-Conscious Lighting</h3>
                 <p className="text-sm color-grey">We prioritize visual comfort and human health in every solution:</p>
 
-                <div className="my-6 flex justify-around">
+                <div className={`${styles['text-card-div']} my-6 flex justify-around`}>
                     <TextCard content="High CRI"/>
                     <TextCard content="Flicker-free Performance"/>
                     <TextCard content="Anti-glare design"/>
                 </div>
             </section>
 
-            <section className="section section-margin flex justify-between gap-16">
-                <div className="flex flex-col justify-center py-6 px-10 max-w-[38rem]">
+            <section className={`${styles['split-card-div']} section section-margin flex flex-shrink-0 justify-between gap-16`}>
+                <div className="flex flex-col justify-center py-6 pr-10 max-w-[38rem]">
                     <h4 className="text-3xl font-bold mb-2">Global Certifications <br/> You Can Trust</h4>
                     <p className="text-xs color-grey">RMAX is deeply committed to continuous research and development in both product innovation and smart technology integration. Every RMAX product undergoes rigorous testing through independent, third-party laboratories and meets multiple international quality and safety certifications — including CE, CB, UL, and other region-specific standards — ensuring global compliance and trusted performance</p>
                 </div>
@@ -109,7 +112,7 @@ const WhyRMAX: React.FC = () => {
                 <h4 className="text-3xl font-bold">More Than Just Products – Complete Solutions</h4>
                 <p className="text-xs color-grey">RMAX is a total solution provider—not just a product vendor We cater to projects across residential, commercial, and industrial sectors, adapting solutions based on budget, style, and local standards We offer:</p>
 
-                <div className="grid grid-cols-3 gap-4 mt-6">
+                <div className={`${styles['grey-card-wrapper']} grid grid-cols-3 gap-4 mt-6`}>
                     <GreyCard content="Lighting Proposals"/>
                     <GreyCard content="CAD Layouts"/>
                     <GreyCard content="Renderings"/>
@@ -131,7 +134,7 @@ const WhyRMAX: React.FC = () => {
                         <FlagSection src="/images/flags/hongkong.png" caption="Hong Kong" subcaption="Export Office"/>
                     </div>
 
-                    <div className="flex justify-center gap-6">
+                    <div className="flex justify-center flex-wrap gap-6">
                         <FlagSection src="/images/flags/india.png" caption="India"/>
                         <FlagSection src="/images/flags/uae.png" caption="UAE"/>
                         <FlagSection src="/images/flags/oman.png" caption="Oman"/>
@@ -147,7 +150,7 @@ const WhyRMAX: React.FC = () => {
             <section className="section section-margin">
                 <h4 className="text-3xl font-bold">Supporting Our Distributors</h4>
                 
-                <div className="grid grid-cols-3 justify-items-center gap-10 mt-6">
+                <div className={`${styles['large-card-wrapper']} grid grid-cols-3 justify-items-center gap-10 mt-6`}>
                     <LargeTextCard title="Fast Delivery" subtitle="Warehouses in KSA, China, and UAE"/>
                     <LargeTextCard title="No MOQ" subtitle="On standard stock items for projects"/>
                     <LargeTextCard title="Full Project Support" subtitle="From product selection to layout and rendering"/>
@@ -207,7 +210,7 @@ const Branding: React.FC = () => {
                 <h5 className="text-4xl font-semibold">Why RMAX</h5>
                 
                     {contents.map((item, index) => (
-                        <div key={index} className="flex items-center justify-between my-4">
+                        <div key={index} className={`${styles['branding-grid-wrapper']} flex flex-wrap items-center justify-between my-4`}>
                             <span>
                                 <h3 className="text-5xl font-bold mb-2" dangerouslySetInnerHTML={{ __html: item.title }}></h3>
                                 <p className="text-xs color-grey">{item.description}</p>
@@ -270,13 +273,12 @@ const GreyCard = ({ content }: {content: string}) => {
 
 const FlagSection = ({ src, caption, subcaption }: {src: string, caption: string, subcaption?: string}) => {
     return (
-        <div className="w-42 h-25 mt-6">
+        <div className={`${styles['flag-div']} w-42 aspect-[42/25] mt-6`}>
             <figure className="relative w-full h-full">    
                 <Image src={src} alt="Country flag" fill={true}/>
             </figure>
             <p className="text-sm font-bold text-center">{caption}</p>
             <p className="text-xs color-grey text-center">{subcaption}</p>
         </div>
-
     );
 }

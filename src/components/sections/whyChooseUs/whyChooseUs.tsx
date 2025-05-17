@@ -26,8 +26,8 @@ const WhyChooseUs: React.FC = () => {
             duration={1000}
             delay={100}
         >
-            <section className="section section-margin py-1 flex justify-between gap-4">
-                <figure className="relative h-[340px] w-[720px] rounded-2xl overflow-hidden shadow-lg">
+            <section className={`${styles['section-style']} section section-margin py-1 flex justify-between gap-4`}>
+                <figure className={`${styles['section-figure']} relative h-[340px] w-[720px] rounded-2xl overflow-hidden shadow-lg`}>
                     <Image src="/images/why-choose-us.png" alt="Why Choose Us" fill={true} className="object-cover" />
                     <div className="absolute z-2 p-10">
                         <h2 className="f-primary text-5xl font-semibold text-stone-50">{contents.title}</h2>
@@ -36,7 +36,7 @@ const WhyChooseUs: React.FC = () => {
                     </div>
                 </figure>    
 
-                <div className="grid grid-cols-2 gap-4">
+                <div className={`${styles['box-container']} grid grid-cols-2 gap-4`}>
                     {contents.cardContents.map((item, index) => (
                         <Box key={index} title={item.title} description={item.description} />
                     ))}
@@ -48,7 +48,7 @@ const WhyChooseUs: React.FC = () => {
 
 const Box: React.FC<BoxProps> = ({ title, description }) => {
     return (
-        <div className={`${styles['shadow']} flex flex-col items-start rounded-md p-4 min-h-[100] min-w-[200]`}>
+        <div className={`${styles['shadow']} flex flex-col items-start rounded-md p-4 min-h-[80] min-w-[120]`}>
             <h3 className="color-primary f-primary text-base font-semibold">{title}</h3>
             <p className="text-gray-600 text-xs">{description}</p>
         </div>

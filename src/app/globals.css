@@ -85,6 +85,24 @@
 	@apply my-18;
 }
 
+@media (width < 720px) {
+  .section-margin {
+    margin-top: 35px;
+    margin-bottom: 35px;
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+}
+
+@media (width < 460px) {
+  .section-margin {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
 
 /*========================================
 ------- OVERRIDING DEFAULT STYLES --------
@@ -155,6 +173,10 @@ body {
 
 .bg-color-grey {
   background-color: #585656;
+}
+
+body {
+  overflow-x: hidden;
 }
 
 

@@ -1,0 +1,5 @@
+@media (width < 990px) {
+    .navbar-div  > ul {
+        display: none;
+    }
+}

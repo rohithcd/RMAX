@@ -13,8 +13,8 @@ import { FOOTER_CONTENTS } from '@/config/constants';
 const Footer = () => {
     return (
         <footer className="section flex flex-col items-center my-4">
-            <div className="flex justify-between items-start w-full my-4">
-                <div className="flex flex-col gap-2 w-1/5">
+            <div className={`${styles['footer-div']} flex justify-between flex-wrap items-start w-full my-4`}>
+                <div className={`${styles['footer-first-div']} flex flex-col gap-2 w-1/5`}>
                     <Image src={RMAX_LOGO} alt="RMAX Logo" width={150} height={78} className="pointer-events-none"/>
 
                     <p className={`${styles['color-grey']} text-xs`}>{FOOTER_CONTENTS.description}</p>
@@ -29,7 +29,7 @@ const Footer = () => {
 
                 </div>
 
-                <div className="flex justify-between gap-26">
+                <div className={`${styles['footer-second-div']} flex justify-between flex-wrap gap-26`}>
                     <ul>
                         <h5 className={`${styles['color-red']} text-lg font-semibold mb-2`}>Quick Links</h5>
 

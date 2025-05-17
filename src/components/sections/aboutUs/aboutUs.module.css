@@ -1,0 +1,17 @@
+@media (width < 990px) {
+    .section-styles {
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+    }
+
+    .list-item {
+        justify-content: center;
+    }
+}
+
+@media (width < 490px) {
+    .image-div {
+        grid-template-columns: minmax(250px, 1fr);
+    }
+}

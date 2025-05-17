@@ -7,6 +7,8 @@ import { Slide } from 'react-awesome-reveal';
 import Button from '@/components/ui/button/button';
 import TextCard from '@/components/ui/textCard/textCard';
 
+import styles from './aboutUs.module.css';
+
 const AboutUs: React.FC = () => {
     return (
         <Slide  
@@ -15,7 +17,7 @@ const AboutUs: React.FC = () => {
             duration={1000}
             delay={100}
         >
-            <section className="section section-margin flex gap-8">
+            <section className={`${styles['section-styles']} section section-margin flex gap-8`}>
                 <div>
                     <p className="text-xs font-medium">Prime Products</p>
                     <h2 className="text-3xl font-bold mt-4">The Story Behind <span className="color-primary"><br/>RMAX</span> Shop.</h2>
@@ -23,7 +25,7 @@ const AboutUs: React.FC = () => {
 
                     <ul className="flex flex-col gap-2 pb-8">
                         <li>
-                            <span className="flex gap-2">
+                            <span className={`${styles['list-item']} flex gap-2`}>
                                 <Image src="/icons/check.svg" alt="Check" width={16} height={16}/>
                                 <h6 className="text-sm">Craftsmanship and Tradition</h6>
                             </span>
@@ -32,7 +34,7 @@ const AboutUs: React.FC = () => {
                         </li>
 
                         <li>
-                            <span className="flex gap-2">
+                            <span className={`${styles['list-item']} flex gap-2`}>
                                 <Image src="/icons/check.svg" alt="Check" width={16} height={16}/>
                                 <h6 className="text-sm">Quality and Sustainability</h6>
                             </span>
@@ -45,7 +47,7 @@ const AboutUs: React.FC = () => {
 
                 </div>
 
-                <div className="grid grid-cols-[210px_240px] grid-rows-[97px_97px_97px] gap-4">
+                <div className={`${styles['image-div']} grid grid-cols-[210px_240px] grid-rows-[97px_97px_97px] gap-4`}>
                     <figure className="row-span-3 relative">
                         <Image src="/images/aboutUs-card.png" alt="About Us" fill={true} className="rounded-2xl"/>
                     </figure>

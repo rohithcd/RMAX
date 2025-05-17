@@ -1,12 +1,17 @@
+// Importing built-in components
+import Image from "next/image";
+
+// Importing custom components
 import Button from "@/components/ui/button/button";
 
-import Image from "next/image";
+// Importing styles
+import styles from "./homeProducts.module.css";
 
 const HomeProducts = () => {
     return (
         <>
-            <section className="section section-margin grid grid-cols-3 gap-8 place-items-center">
-                <div className="">  
+            <section className={`${styles['products-div']} section section-margin grid grid-cols-3 gap-8 place-items-center`}>
+                <div className={`${styles['products-first-item']}`}>  
                     <p className="text-xs">RMAX Choice</p>
 
                     <h3 className="text-3xl font-bold mb-3">Our Most <span className="color-primary">Popular</span> Products</h3>

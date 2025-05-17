@@ -8,6 +8,7 @@ export default {
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx,css}'
   ],
+
   prefix: '',
   plugins: [
     //require('tailwindcss-animate')

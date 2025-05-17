@@ -1,0 +1,21 @@
+@media (width < 990px) {
+    .products-div {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .products-first-item {
+        max-width: 18rem;
+    }
+}
+
+@media (width < 620px) {
+    .products-div {
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+
+    .products-first-item {
+        max-width: 100%;
+        text-align: center;
+        align-items: center;
+    }
+}

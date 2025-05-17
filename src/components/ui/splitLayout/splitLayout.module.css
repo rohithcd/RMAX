@@ -1,0 +1,16 @@
+@media (width < 990px) {
+    .parent-wrapper {
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+        align-items: center;
+        gap: 20px;
+    }
+
+    .parent-wrapper > div {
+        order: 1;
+        text-align: center;
+    }
+
+    .parent-wrapper > figure div {
+        margin: 0 auto;
+    }
+}

@@ -1,8 +1,10 @@
 // Importing built-in dependencies
 import Image from 'next/image';
 import React from 'react';
-
 import { Slide } from "react-awesome-reveal";
+
+// Importing styles
+import styles from "./splitLayout.module.css";
 
 interface SplitLayoutProps {
     title: string;
@@ -13,7 +15,7 @@ interface SplitLayoutProps {
 
 const SplitLayout: React.FC<SplitLayoutProps> = ({ title, description, image, reverse=false}) => {
     return (
-        <article className="grid grid-cols-2 gap-24 my-18">
+        <article className={`${styles['parent-wrapper']} grid grid-cols-2 gap-24 my-18`}>
             <div className={`self-center ${reverse ? 'order-2' : 'order-1'}`}>
                 <Slide
                     direction={reverse ? 'right' : 'left'}
@@ -38,7 +40,7 @@ const SplitLayout: React.FC<SplitLayoutProps> = ({ title, description, image, re
                     direction={reverse ? 'left' : 'right'}
                     triggerOnce={true}
                     duration={1000}
-                    className="relative  min-h-75 overflow-hidden rounded-2xl "
+                    className="relative min-h-75 max-w-140 overflow-hidden rounded-2xl "
                 >
                     <Image src={image} alt="Image" fill={true}/>
                 </Slide>
