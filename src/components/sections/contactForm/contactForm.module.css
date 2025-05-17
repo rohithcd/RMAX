@@ -1,0 +1,8 @@
+@media (width < 740px) {
+    .input-wrapper {
+        flex-direction: column;
+        /* For 3rd input element */
+        width: 100%;
+        padding-right: 0; 
+    }
+}
