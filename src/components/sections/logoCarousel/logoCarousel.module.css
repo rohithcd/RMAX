@@ -7,6 +7,19 @@
   }
 }
 
+@keyframes scroll-right {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
 .animate-scroll-left {
     animation: scroll-left 10s linear infinite;
+}
+
+.animate-scroll-right {
+    animation: scroll-right 10s linear infinite;
 }

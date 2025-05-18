@@ -1,0 +1,12 @@
+@media (width < 539px) {
+    .stats-div {
+        justify-content: center;
+        gap: 2rem;
+    }
+
+    .stats-div span {
+        display: inline-block;
+        min-width: 7rem;
+    }
+}
+

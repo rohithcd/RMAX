@@ -31,7 +31,7 @@ const Footer = () => {
 
                 <div className={`${styles['footer-second-div']} flex justify-between flex-wrap gap-26`}>
                     <ul>
-                        <h5 className={`${styles['color-red']} text-lg font-semibold mb-2`}>Quick Links</h5>
+                        <h5 className={`color-primary text-lg font-semibold mb-2`}>Quick Links</h5>
 
                         {FOOTER_CONTENTS.quickLinks.map((link) => (
                             <li key={link.name} className="list-disc text-sm ml-4 leading-6">{link.name}</li>
@@ -51,7 +51,7 @@ const Footer = () => {
 
                     {/* Section - Information */}
                     <div className="max-w-48">
-                        <h5 className={`${styles['color-red']} text-lg font-semibold mb-2`}>Information</h5>
+                        <h5 className={`color-primary text-lg font-semibold mb-2`}>Information</h5>
 
                         {/* Sub Section - Location */}
                         <div>
