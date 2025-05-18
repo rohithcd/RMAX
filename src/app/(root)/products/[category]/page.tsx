@@ -4,7 +4,7 @@ import Image from "next/image";
 
 // Importing components
 import TopBanner from "@/components/sections/topBanner/topBanner";
-import HomeProducts from "@/components/sections/homeProducts";
+//import HomeProducts from "@/components/sections/homeProducts";
 
 
 const ProductListPage: React.FC = () => {
@@ -95,6 +95,10 @@ const Tag = ({ content }: {content: string}) => {
             </span>
         </>
     );
+}
+
+export function generateStaticParams() {
+  return [{ category: 'outdoor-lighting' }, { category: 'indoor-lighting' }, { category: 'home-lighting' }]
 }
 
 export default ProductListPage;
