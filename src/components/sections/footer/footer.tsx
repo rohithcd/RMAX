@@ -8,6 +8,7 @@ import styles from './footer.module.css';
 
 // Importing constants
 import { FOOTER_CONTENTS } from '@/config/constants';
+import Link from 'next/link';
 
 
 const Footer = () => {
@@ -21,10 +22,10 @@ const Footer = () => {
 
                     {/* Social Icons */}
                     <span className="flex gap-1">
-                        <Image src="/icons/fb.svg" alt="facebook" width={20} height={20}/>
-                        <Image src="/icons/insta.svg" alt="instagram" width={20} height={20}/>
-                        <Image src="/icons/linkedin.svg" alt="linkedin" width={20} height={20}/>
-                        <Image src="/icons/yt.svg" alt="youtube" width={20} height={20}/>
+                        <a href='https://facebook.com'><Image src="/icons/fb.svg" alt="facebook" width={20} height={20}/></a>
+                        <a href='https://instagram.com'><Image src="/icons/insta.svg" alt="instagram" width={20} height={20}/></a>
+                        <a href='https://linkedin.com'><Image src="/icons/linkedin.svg" alt="linkedin" width={20} height={20}/></a>
+                        <a href='https://youtube.com'><Image src="/icons/yt.svg" alt="youtube" width={20} height={20}/></a>
                     </span>
 
                 </div>
@@ -33,8 +34,11 @@ const Footer = () => {
                     <ul>
                         <h5 className={`color-primary text-lg font-semibold mb-2`}>Quick Links</h5>
 
-                        {FOOTER_CONTENTS.quickLinks.map((link) => (
-                            <li key={link.name} className="list-disc text-sm ml-4 leading-6">{link.name}</li>
+                        {FOOTER_CONTENTS.quickLinks.map((content) => (
+                            <li key={content.name} className="list-disc text-sm ml-4 leading-6">
+                                <Link href={content.link}>{content.name}</Link>
+                                
+                            </li>
                         ))}
 
                     </ul>
@@ -44,7 +48,7 @@ const Footer = () => {
 
                         <div className="grid grid-cols-3 gap-1">
                             {FOOTER_CONTENTS.ourStores.map((link) => (
-                                <Image key={link.name} src={link.flag} width="52" height="35" alt="Flag"/>
+                                <Image key={link.name} src={link.flag} title={link.name} width="52" height="35" alt="Flag"/>
                             ))}
                         </div>
                     </div>
@@ -69,7 +73,7 @@ const Footer = () => {
                         </div>
 
                         {/* Sub Section - Phone */}
-                        <div className="mt-1">
+                        {/* <div className="mt-1">
                             <span className="flex items-center gap-3 font-medium">
                                 <Image src="/icons/phone.svg" alt="phone" width={18} height={18}/>
                                 <h6>Phone</h6>
@@ -78,13 +82,13 @@ const Footer = () => {
                             <p className={`${styles['color-grey']} pl-8 text-xs f-manrope`}>
                                 0761-8523-398
                             </p>
-                        </div>
+                        </div> */}
 
-                        {/* Sub Section - Phone */}
+                        {/* Sub Section - Email */}
                         <div className="mt-1">
                             <span className="flex items-center gap-3 font-medium">
                                 <Image src="/icons/mail.svg" alt="mail" width={18} height={18}/>
-                                <h6>Phone</h6>
+                                <h6>Email</h6>
                             </span>
 
                             <p className={`${styles['color-grey']} pl-8 text-xs f-manrope`}>

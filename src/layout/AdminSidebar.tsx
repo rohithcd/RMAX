@@ -53,6 +53,11 @@ const navItems: NavItem[] = [
 		icon: <BoxCubeIcon />,
 		name: "Sub Category",
 		path: "/admin/subcategory"
+	},
+	{ 
+		icon: <BoxCubeIcon />,
+		name: "News",
+		path: "/admin/news"
 	}
 ];
 

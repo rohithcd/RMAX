@@ -74,9 +74,9 @@ export const FOOTER_CONTENTS = {
     quickLinks: [
         { name: 'Home', link: '/' },
         { name: 'About Us', link: '/about-us' },
-        { name: 'Product', link: '/products' },
-        { name: 'Package', link: '/package' },
-        { name: 'Blog', link: '/blog' },
+        { name: 'Project', link: '/projects' },
+        { name: 'News', link: '/news' },
+        { name: 'Why RMAX', link: '/why-rmax' },
         { name: 'Contact us', link: '/contact-us' }
     ],
     

@@ -16,7 +16,11 @@ export async function GET(req: NextRequest) {
     const fileName = path.basename(url.pathname);
     const action = url.searchParams.get('action');
 
+    console.log('Pathname: ', fileName);
+    console.log(await prisma.file.findMany({}));
     const file = await prisma.file.findUnique({ where: { fileName }});
+
+    console.log('File: ', file);
 
     if(!file) {
         return NextResponse.json({ message: 'File not found on the server' }, { status: 404 });
@@ -26,7 +30,7 @@ export async function GET(req: NextRequest) {
         return NextResponse.json({ message: 'File is not available or currently archived by the admin' }, { status: 404 });
     }
 
-    const absoluteFilePath = path.join(process.cwd(), 'public', file.filePath);
+    const absoluteFilePath = path.join(file.filePath);
 
     if(!fs.existsSync(absoluteFilePath)) {
         return NextResponse.json({ message: 'File not found on the server' }, { status: 404 });

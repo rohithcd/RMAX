@@ -28,10 +28,8 @@ const options = [
 ];
 
 const Navbar = () => {
-    const isLargeScreen = useWindowResize(990, false);
+    const isLargeScreen = useWindowResize(990, window.innerWidth > 990);
     const [sideMenuActive, setSideMenuActive] = useState<boolean>(false);
-
-    console.log('isLargeScreen', isLargeScreen);
 
     // When user resize the window by dragging the screen, it deactivates sidebar
     if(isLargeScreen && sideMenuActive) {

@@ -5,6 +5,9 @@ import React from 'react';
 // Importing components
 import Button from '@/components/ui/button/button';
 
+// Importing styles
+import styles from './blog.module.css';
+
 const BlogSection: React.FC = () => {
 
     return (
@@ -18,7 +21,7 @@ const BlogSection: React.FC = () => {
                 </div>
             </div>
 
-            <div className="w-full flex gap-6 mt-8">
+            <div className={`${styles['blog-div']} w-full flex gap-6 justify-between mt-8`}>
                 <BlogCard/>
                 <BlogCard/>
             </div>
@@ -29,8 +32,10 @@ const BlogSection: React.FC = () => {
 const BlogCard: React.FC = () => {
     return (
         <>
-            <div className="w-full">
-                <figure className="w-full h-[20rem] bg-[#585856] rounded-lg"></figure>
+            <div className={`w-full`}>
+                <figure className="max-w-[40rem] w-full aspect-2/1 bg-[#585856] rounded-lg">
+
+                </figure>
                 <p className="text-sm text-[#262626] font-semibold mt-2 mb-1">Lighting the Perfect Brew: RMAX Lighting’s Café Solutions</p>
 
                 <Link href="https://google.com" className="text-xs color-primary">Read more</Link>

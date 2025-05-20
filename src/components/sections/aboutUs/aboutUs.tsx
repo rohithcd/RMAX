@@ -47,7 +47,7 @@ const AboutUs: React.FC = () => {
 
                 </div>
 
-                <div className={`${styles['image-div']} grid grid-cols-[210px_240px] grid-rows-[97px_97px_97px] gap-4`}>
+                <div className={`${styles['image-div']} grid grid-cols-[210px_230px] grid-rows-[95px_95px_95px] gap-4`}>
                     <figure className="row-span-3 relative">
                         <Image src="/images/aboutUs-card.png" alt="About Us" fill={true} className="rounded-2xl"/>
                     </figure>

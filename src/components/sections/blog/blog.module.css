@@ -1,0 +1,10 @@
+@media (width < 990px) {
+    .blog-div {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .blog-div > div {
+        width: max-content;
+    }
+}
