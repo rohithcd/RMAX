@@ -6,7 +6,9 @@ import { Slide } from 'react-awesome-reveal';
 // Importing components
 import Button from '@/components/ui/button/button';
 import TextCard from '@/components/ui/textCard/textCard';
+import VideoPlayer from '@/components/ui/videoPlayer';
 
+// Importing styles
 import styles from './aboutUs.module.css';
 
 const AboutUs: React.FC = () => {
@@ -62,10 +64,12 @@ const AboutUs: React.FC = () => {
                         subhead="R&D Experts"
                     />
 
-                    <TextCard
+                    <VideoPlayer />
+
+                    {/* <TextCard
                         head="Our Vision"
                         subhead="Innovative Solutions"
-                    />
+                    /> */}
                 </div>
             </section>
         </Slide>
