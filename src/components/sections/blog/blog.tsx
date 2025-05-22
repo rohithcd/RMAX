@@ -1,6 +1,8 @@
 // Importing built-in dependencies
-import Link from 'next/link';
 import React from 'react';
+
+// Importing components
+import BlogCard from '@/components/ui/blog';
 
 // Importing components
 import Button from '@/components/ui/button/button';
@@ -22,26 +24,11 @@ const BlogSection: React.FC = () => {
             </div>
 
             <div className={`${styles['blog-div']} w-full flex gap-6 justify-between mt-8`}>
-                <BlogCard/>
-                <BlogCard/>
+                <BlogCard imgSrc='' imgAlt='' title='Lighting the Perfect Brew: RMAX Lighting’s Café Solutions' link=''/>
+                <BlogCard imgSrc='' imgAlt='' title='Lighting the Perfect Brew: RMAX Lighting’s Café Solutions' link=''/>
             </div>
         </section>
     );
 };
-
-const BlogCard: React.FC = () => {
-    return (
-        <>
-            <div className={`w-full`}>
-                <figure className="max-w-[40rem] w-full aspect-2/1 bg-[#585856] rounded-lg">
-
-                </figure>
-                <p className="text-sm text-[#262626] font-semibold mt-2 mb-1">Lighting the Perfect Brew: RMAX Lighting’s Café Solutions</p>
-
-                <Link href="https://google.com" className="text-xs color-primary">Read more</Link>
-            </div>
-        </>
-    );
-}
 
 export default BlogSection;

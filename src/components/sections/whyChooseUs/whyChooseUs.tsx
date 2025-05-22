@@ -50,7 +50,7 @@ const Box: React.FC<BoxProps> = ({ title, description }) => {
     return (
         <div className={`${styles['shadow']} flex flex-col items-start rounded-md p-4 min-h-[80] min-w-[120]`}>
             <h3 className="color-primary f-primary text-base font-semibold">{title}</h3>
-            <p className="text-gray-600 text-xs">{description}</p>
+            <p className="text-gray-600 text-sm">{description}</p>
         </div>
     );
 }

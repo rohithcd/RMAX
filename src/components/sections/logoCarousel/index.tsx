@@ -1,10 +1,10 @@
 "use client"
 
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 
-import styles from './logoCarousel.module.css';
+//import styles from './logoCarousel.module.css';
 
 
 const LogoCarousel = () => {
@@ -18,21 +18,21 @@ const logoArray = [
 ];
 
 
-    const [width, setWidth] = useState(0);
-    const scrollRef = useRef<HTMLDivElement>(null);
+//     const [width, setWidth] = useState(0);
+//     const scrollRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    // Get the width of the content to determine how far to animate
-    if (scrollRef.current) {
-      // This will be the width of one set of logos
-      setWidth(scrollRef.current.offsetWidth);
-    }
-  }, [logoArray]);
+//   useEffect(() => {
+//     // Get the width of the content to determine how far to animate
+//     if (scrollRef.current) {
+//       // This will be the width of one set of logos
+//       setWidth(scrollRef.current.offsetWidth);
+//     }
+//   }, [logoArray]);
 
     return (
         <>
         	<section className="section-margin w-full overflow-hidden">
-                <div className="bg-color-primary h-[8rem] mb-2 overflow-hidden">
+                <div className="bg-color-primary1 h-[8rem] mb-2 overflow-hidden">
                     <motion.div
                         className="flex items-center gap-16 h-full whitespace-nowrap"
                         animate={{ x: ["0%", "-100%"] }}
@@ -41,14 +41,26 @@ const logoArray = [
                         {[...new Array(3)].fill(0).map((_, index) => (
                             <React.Fragment key={index}>
                                 {logoArray.map((row) => (
-                                    <Image key={row.alt} src={row.src} alt={row.alt} width={row.width} height={row.height}/>
+                                    <div
+                                        className="flex items-center justify-center bg-[#EBE8E8] flex-none h-full w-[12rem] relative rounded-lg"
+                                        key={row.alt} 
+                                    >
+                                        <Image 
+                                            key={row.alt}
+                                            src={row.src} 
+                                            alt={row.alt} 
+                                            width={row.width} 
+                                            height={row.height}
+                                        />
+                                    </div>
+                                    
                                 ))}
                             </React.Fragment>
                         ))}
                     </motion.div>
                 </div>
 
-                <div className="bg-color-primary h-[8rem] mb-2 overflow-hidden">
+                {/* <div className="bg-color-primary h-[8rem] mb-2 overflow-hidden">
                     <motion.div
                         className="flex items-center gap-16 h-full whitespace-nowrap"
                         animate={{ x: ["-100%", "0%"] }}
@@ -62,7 +74,7 @@ const logoArray = [
                             </React.Fragment>
                         ))}
                     </motion.div>
-                </div>
+                </div> */}
 		
                 {/* <div className="bg-color-primary h-[8rem] mb-2">
                     <div className={`flex items-center justify-around h-full ${styles['animate-scroll-right2']} whitespace-nowrap`}>

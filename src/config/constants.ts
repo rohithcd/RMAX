@@ -47,6 +47,24 @@ export const HERO_CONTENTS = [
         button: 'About Us',
         href: '/about-us'
     },
+    {
+        img: '/images/carousel-image1.png',
+        alt: 'Carousel Image 1',
+        subHeading: 'LED Mastery',
+        title: 'The Ultimate <span class="color-primary">Luminance</span> <br/> Lover\'s Destination.',
+        description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus maxime recusandae deserunt, omnis tempore, veritatis, id repudiandae ullam facilis dolorum sit quisquam tempora qui accusantium incidunt!',
+        button: 'About Us',
+        href: '/about-us'
+    },
+    {
+        img: '/images/carousel-image1.png',
+        alt: 'Carousel Image 1',
+        subHeading: 'LED Mastery',
+        title: 'The Ultimate <span class="color-primary">Luminance</span> <br/> Lover\'s Destination.',
+        description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus maxime recusandae deserunt, omnis tempore, veritatis, id repudiandae ullam facilis dolorum sit quisquam tempora qui accusantium incidunt!',
+        button: 'About Us',
+        href: '/about-us'
+    },
 ];
 
 /*----------------------------------------

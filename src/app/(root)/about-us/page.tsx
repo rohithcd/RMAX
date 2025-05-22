@@ -22,7 +22,7 @@ const HomePage: React.FC = () => {
 			<section className="section section-margin my-8">
 				<div className="mb-8">
 					<h3 className="text-3xl font-bold pb-2">About <span className="color-primary">RMAX</span></h3>
-					<p className="text-xs color-grey">Founded in 2009, RMAX group is a global pioneer in the lighting industry, delivering cutting-edge, intelligent, and sustainable solutions under its flagship RMAX brand. With expertise spanning residential, commercial, and industrial sectors, RMAX fuses top-tier craftsmanship with advanced technology to create premium lighting experiences worldwide—where innovation meets reliability.</p>
+					<p className="text-sm color-grey">Founded in 2009, RMAX group is a global pioneer in the lighting industry, delivering cutting-edge, intelligent, and sustainable solutions under its flagship RMAX brand. With expertise spanning residential, commercial, and industrial sectors, RMAX fuses top-tier craftsmanship with advanced technology to create premium lighting experiences worldwide—where innovation meets reliability.</p>
 				</div>
 
 				<div className={`${styles['textcard-div']} flex justify-center gap-4 mb-8`}>
@@ -33,14 +33,14 @@ const HomePage: React.FC = () => {
 				
 				<div className="mb-12">
 					<h3 className="text-3xl font-bold pb-2">Why <span className="color-primary">RMAX?</span></h3>
-					<p className="text-xs color-grey">At RMAX, we go beyond delivering premium lighting and electrical solutions. We are committed to meeting the needs of our partners, focusing on customer satisfaction, building brand trust, and enhancing competitiveness. Our goal is to create lasting value and drive success for all our partners.</p>
+					<p className="text-sm color-grey">At RMAX, we go beyond delivering premium lighting and electrical solutions. We are committed to meeting the needs of our partners, focusing on customer satisfaction, building brand trust, and enhancing competitiveness. Our goal is to create lasting value and drive success for all our partners.</p>
 				</div>
 
 				<div>
 					<h3 className="text-3xl font-bold pb-2"><span className="color-primary">RMAX</span> Culture</h3>
-					<p className="text-xs color-grey mb-2">At RMAX, every solution is crafted with passion and precision. We are driven by a commitment to innovation, energy efficiency, and sustainability, knowing that light plays a vital role in enhancing people’s quality of life. Wherever light is needed, RMAX is there—delivering solutions that inspire comfort, productivity, and well-being. </p>
-					<p className="text-xs color-grey mb-2">We aim to raise living standards by making innovative, stylish, and professional lighting and electrical products accessible to homes, businesses, and large-scale projects. We understand the importance of every investment—whether it’s a home, office, or facility—and we are dedicated to supporting those investments with products that offer lasting quality and value. </p>
-					<p className="text-xs color-grey">RMAX is committed to improving communities, actively contributing to the well-being of residents and businesses through modern technologies and diverse solutions tailored to their evolving needs. With a focus on customer success and satisfaction, we strive for excellence in everything we do.</p>
+					<p className="text-sm color-grey mb-2">At RMAX, every solution is crafted with passion and precision. We are driven by a commitment to innovation, energy efficiency, and sustainability, knowing that light plays a vital role in enhancing people’s quality of life. Wherever light is needed, RMAX is there—delivering solutions that inspire comfort, productivity, and well-being. </p>
+					<p className="text-sm color-grey mb-2">We aim to raise living standards by making innovative, stylish, and professional lighting and electrical products accessible to homes, businesses, and large-scale projects. We understand the importance of every investment—whether it’s a home, office, or facility—and we are dedicated to supporting those investments with products that offer lasting quality and value. </p>
+					<p className="text-sm color-grey">RMAX is committed to improving communities, actively contributing to the well-being of residents and businesses through modern technologies and diverse solutions tailored to their evolving needs. With a focus on customer success and satisfaction, we strive for excellence in everything we do.</p>
 				</div>
 			</section>
 

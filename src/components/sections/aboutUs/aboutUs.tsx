@@ -23,7 +23,7 @@ const AboutUs: React.FC = () => {
                 <div>
                     <p className="text-xs font-medium">Prime Products</p>
                     <h2 className="text-3xl font-bold mt-4">The Story Behind <span className="color-primary"><br/>RMAX</span> Shop.</h2>
-                    <p className="text-xs color-grey pb-3">At RMAX, we redefine excellence in lighting and electrical solutions. With a commitment to innovation, craftsmanship, and sustainability, we provide high-quality products that enhance every space.</p>
+                    <p className="text-sm color-grey pb-3">At RMAX, we redefine excellence in lighting and electrical solutions. With a commitment to innovation, craftsmanship, and sustainability, we provide high-quality products that enhance every space.</p>
 
                     <ul className="flex flex-col gap-2 pb-8">
                         <li>

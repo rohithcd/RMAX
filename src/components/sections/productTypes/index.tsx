@@ -15,7 +15,7 @@ const ProductTypes: React.FC = () => {
                 <div className="text-center mb-4">
                     <p className="text-xs font-medium">Quality Product</p>
                     <h3 className="text-3xl font-bold my-3">First Choice <span className="color-primary">Professional Lightning</span></h3>
-                    <p className={`${styles['p-text']} w-[46rem] mx-auto text-xs color-grey`}>Discover our wide-ranging RMAX product lineup, where advanced design meets real-world practicality. Whether you’re transforming a cozy living area or upgrading large-scale commercial spaces, our solutions illuminate every moment—enhancing comfort, functionality, and style.</p>
+                    <p className={`${styles['p-text']} w-[46rem] mx-auto text-sm color-grey`}>Discover our wide-ranging RMAX product lineup, where advanced design meets real-world practicality. Whether you’re transforming a cozy living area or upgrading large-scale commercial spaces, our solutions illuminate every moment—enhancing comfort, functionality, and style.</p>
                 </div>
                 
                 <div className="flex gap-6 overflow-x-scroll items-stretch scrollbar-hide">
