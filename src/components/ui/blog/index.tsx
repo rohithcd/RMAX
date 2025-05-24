@@ -16,7 +16,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ imgSrc, imgAlt, title, link}) => {
         <>
             <div className={`w-full`}>
                 <figure className="max-w-[40rem] w-full aspect-2/1 bg-[#585856] rounded-lg">
-                    <Image src={imgSrc} alt={imgAlt}/>
+                    {(imgSrc) && <Image src={imgSrc} alt={imgAlt}/>}
                 </figure>
                 <p className="text-sm text-[#262626] font-semibold mt-2 mb-1">{title}</p>
 

@@ -40,6 +40,7 @@ model File {
   carousels           Carousel[]
   productCards        ProductCard[]
   projects            Project[]
+  categories          Category[]
 }
 
 model Product {
@@ -71,10 +72,16 @@ model Product {
 }
 
 model Category {
-  id   String @id @default(uuid())
-  name String @unique
+  id          String @id @default(uuid())
+  name        String @unique
+  slug        String 
+  description String?
+  isActive    Boolean @default(true)
 
-  products Product[]
+  image       File   @relation(fields: [imageId], references: [id])
+  imageId     String
+
+  products    Product[]
 
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
@@ -82,25 +89,30 @@ model Category {
 }
 
 model SubCategory {
-  id   String @id @default(uuid())
-  name String @unique
+  id          String @id @default(uuid())
+  name        String @unique
+  slug        String
+  isActive    Boolean @default(true)
 
-  category   Category @relation(fields: [categoryId], references: [id])
-  categoryId String
+  category    Category @relation(fields: [categoryId], references: [id])
+  categoryId  String
 
-  products Product[]
+  products    Product[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model Tag {
-  id       String    @id @default(uuid())
-  name     String    @unique
-  products Product[]
+  id          String    @id @default(uuid())
+  name        String    @unique
+  slug        String
+  isActive    Boolean   @default(true)
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  products    Product[]
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model News {
@@ -111,8 +123,8 @@ model News {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  image   File   @relation(fields: [imageId], references: [id])
-  imageId String
+  image       File   @relation(fields: [imageId], references: [id])
+  imageId     String
 }
 
 model Carousel {
@@ -124,20 +136,20 @@ model Carousel {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  image   File   @relation(fields: [imageId], references: [id])
-  imageId String
+  image       File   @relation(fields: [imageId], references: [id])
+  imageId     String
 }
 
 model Message {
-  id        String   @id @default(uuid())
-  firstName String
-  lastName  String
-  email     String
-  phone     String
-  country   String?
-  message   String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          String   @id @default(uuid())
+  firstName   String
+  lastName    String
+  email       String
+  phone       String
+  country     String?
+  message     String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model ProductModel {
@@ -148,25 +160,26 @@ model ProductModel {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  image   File   @relation(fields: [imageId], references: [id])
-  imageId String
+  image       File   @relation(fields: [imageId], references: [id])
+  imageId     String
 
-  product   Product @relation(fields: [productId], references: [id])
-  productId String
+  product     Product @relation(fields: [productId], references: [id])
+  productId   String
 }
 
 model ProductCard {
   id          String   @id @default(uuid())
   title       String
   description String
+  isActive    Boolean  @default(true)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  image   File   @relation(fields: [imageId], references: [id])
-  imageId String
+  image       File   @relation(fields: [imageId], references: [id])
+  imageId     String
 
-  product   Product @relation(fields: [productId], references: [id])
-  productId String
+  product     Product @relation(fields: [productId], references: [id])
+  productId   String
 }
 
 model Project {
@@ -177,6 +190,6 @@ model Project {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  image   File   @relation(fields: [imageId], references: [id])
-  imageId String
+  image       File   @relation(fields: [imageId], references: [id])
+  imageId     String
 }

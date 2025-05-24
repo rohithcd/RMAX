@@ -45,7 +45,7 @@ const AboutUs: React.FC = () => {
                         </li>
                     </ul>
 
-                    <Button name="Read More"/>
+                    <Button name="Read More" href='/about-us'/>
 
                 </div>
 

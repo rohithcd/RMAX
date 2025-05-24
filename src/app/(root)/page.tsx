@@ -1,5 +1,6 @@
 // Importing built-in dependencies
 import React from "react";
+import { PrismaClient } from "@prisma/client";
 
 // Importing components
 import Hero from "@/components/sections/hero/hero";
@@ -11,13 +12,18 @@ import Blog from "@/components/sections/blog/blog";
 import ProductTypes from "@/components/sections/productTypes";
 import LogoCarousel from "@/components/sections/logoCarousel";
 import HomeProducts from "@/components/sections/homeProducts";
-//import Customers from "@/components/sections/customers";
 import GlobalMap from "@/components/sections/globalMap";
 
-const HomePage: React.FC = () => {
+export default async function HomePage() {
+	const prisma = new PrismaClient();
+
+	const [carouselContents] = await Promise.all([
+		prisma.carousel.findMany({ where: {isActive: true }, include: { image: true }})
+	]);
+
 	return (
 		<>
-			<Hero/>
+			<Hero data={carouselContents}/>
 			<WhyChooseUs/>
 			<AboutUs/>
 			<LogoCarousel/> {/* update:Red banner needs to be smaller, first section moves left, second section moves right */} 
@@ -33,5 +39,3 @@ const HomePage: React.FC = () => {
 
 	);
 };
-
-export default HomePage;

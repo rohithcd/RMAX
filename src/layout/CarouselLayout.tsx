@@ -27,7 +27,7 @@ import toast from "react-hot-toast";
 //     productId: string;
 // }
 
-function BaseLayout({ data }: { data: Record<string, unknown>[] }) {
+function CarouselLayout({ data }: { data: Record<string, unknown>[] }) {
     // Variables
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isEditMode, setIsEditMode] = useState(false);
@@ -49,7 +49,8 @@ function BaseLayout({ data }: { data: Record<string, unknown>[] }) {
             
             // Extract basic record data
             const recordData = {
-                name: formData.get("name") as string,
+                title: formData.get("title") as string,
+                subTitle: formData.get('subTitle') as string,
                 description: formData.get("description") as string,
             };
 
@@ -86,7 +87,7 @@ function BaseLayout({ data }: { data: Record<string, unknown>[] }) {
 
                     id: currentRecord.id 
                 }, 
-                    object: "category" 
+                    object: "carousel" 
                   })
                 : createRecord({ 
                     record: {...recordData, 
@@ -96,7 +97,7 @@ function BaseLayout({ data }: { data: Record<string, unknown>[] }) {
                         connect: { id: fileId }
                     }} : {}), 
                 }, 
-                    object: "category" 
+                    object: "carousel" 
                   })
             );
     
@@ -111,7 +112,7 @@ function BaseLayout({ data }: { data: Record<string, unknown>[] }) {
 
                 if(error) {
                     console.error('Error: ', error);
-                    //toast.error(error.message);
+                    toast.error(error.message);
                 }
             }
     
@@ -137,13 +138,13 @@ function BaseLayout({ data }: { data: Record<string, unknown>[] }) {
         setIsModalOpen(true);
     }
 
-    const modalTitle = isEditMode ? "Edit Category" : "Add Category";
+    const modalTitle = isEditMode ? "Edit Carousel" : "Add Carousel";
     const submitButtonText = isEditMode ? "Update" : "Create";
 
     return (
         <>
             <div className="flex items-center justify-between mb-4">
-                <Button variant="outline" onClick={handleAddNew} className="w-32">Add Category</Button>
+                <Button variant="outline" onClick={handleAddNew} className="w-32">Add Carousel</Button>
             </div>
 
             <Modal 
@@ -157,12 +158,22 @@ function BaseLayout({ data }: { data: Record<string, unknown>[] }) {
                 
                 <Form onSubmit={handleSubmit} className="flex flex-col gap-4 p-8 m-8">
                     <span>
-                        <Label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-400">Name</Label>
+                        <Label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-400">Title</Label>
                         <Input 
                             type="text" 
-                            name="name" 
-                            placeholder="Enter category name" 
-                            defaultValue={currentRecord?.name as string || ''}
+                            name="title" 
+                            placeholder="Enter carousel title" 
+                            defaultValue={currentRecord?.title as string || ''}
+                        />
+                    </span>
+
+                    <span>
+                        <Label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-400">Sub Title</Label>
+                        <Input 
+                            type="text" 
+                            name="subTitle" 
+                            placeholder="Enter carousel subtitle" 
+                            defaultValue={currentRecord?.subTitle as string || ''}
                         />
                     </span>
 
@@ -170,7 +181,7 @@ function BaseLayout({ data }: { data: Record<string, unknown>[] }) {
                         <Label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-400">Description</Label>
                         <TextArea 
                             name="description" 
-                            placeholder="Enter description" 
+                            placeholder="Enter carousel description" 
                             rows={4}
                             defaultValue={currentRecord?.description as string || ''}
                         />
@@ -185,10 +196,10 @@ function BaseLayout({ data }: { data: Record<string, unknown>[] }) {
                 </Form>
             </Modal>
             
-            <DataTable columns={{'name': 'text', 'description': 'text', 'isActive': 'boolean', 'image': 'file'}} data={data} onEdit={handleEdit} object="category"/>
+            <DataTable columns={{'title': 'text', 'subTitle': 'text', 'description': 'text', 'isActive': 'boolean', 'image': 'file'}} data={data} onEdit={handleEdit} object="carousel"/>
             
         </>
     )
 }
 
-export default BaseLayout;
+export default CarouselLayout;

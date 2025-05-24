@@ -27,7 +27,7 @@ const ProductTypes: React.FC = () => {
                 </div>
 
                 <div className="text-center mt-6">
-                    <Button name="View All" />
+                    <Button name="View All" href='/products'/>
                 </div>
                 
             </section>
@@ -44,7 +44,7 @@ const ProductCard: React.FC<ProductCardProps> = ({title, description}) => {
     return (
         <div className="flex flex-col justify-end w-60 h-40 flex-shrink-0 border-1 hover:border-c-primary px-4 pb-3 rounded-md">
             <h6>{title}</h6>
-            <p className="text-xs color-grey">{description}</p>
+            <p className="text-sm color-grey">{description}</p>
         </div>
     );
 }

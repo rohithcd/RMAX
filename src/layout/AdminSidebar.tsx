@@ -29,6 +29,11 @@ const navItems: NavItem[] = [
 		name: "Static Contents",
 		path: "/admin/static-contents"
 	},
+  { 
+		icon: <ListIcon />,
+		name: "Carousel",
+		path: "/admin/carousel"
+	},
 	{ 
 		icon: <BoxCubeIcon />,
 		name: "Product Menu",

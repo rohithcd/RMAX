@@ -8,9 +8,9 @@ import BaseLayout from "@/layout/BaseLayout";
 
 export default async function CategoryPage() {
     const prisma = new PrismaClient();
-    const categories = await prisma.category.findMany({});
-
-    console.log('Categories:', categories);
+    const categories = await prisma.category.findMany({ include: {
+        image: true
+    }});
 
     return (
         <>

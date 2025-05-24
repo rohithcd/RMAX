@@ -100,16 +100,14 @@ const MainNavbar = () => {
 
         <div ref={subMenuRef} className={`fixed b-0 l-0 px-14 py-10 flex flex-wrap gap-24 w-[100vw] h-[100vh] z-99 bg-stone-50 overflow-y-auto ${styles['sub-menu']}`} onMouseLeave={handleMouseLeave} onMouseOver={handleMouseOver}>
             {productCategories.map((category, index) => (
-                <>
-                    <div>
-                        <h6 className="text-xl font-bold mb-2">{category.name}</h6>
-                        <ul className='' key={index + category.name}>
-                            {category.children.map((subCategory, index) => (
-                                <li key={index}><Link href={subCategory.path} className={`${styles['nav-links']} text-lg`}>{subCategory.name}</Link></li>
-                            ))}
-                        </ul>
-                    </div>
-                </>
+                <div key={category.name + index}>
+                    <h6 className="text-xl font-bold mb-2">{category.name}</h6>
+                    <ul className='' key={index + category.name}>
+                        {category.children.map((subCategory, index) => (
+                            <li key={index}><Link href={subCategory.path} className={`${styles['nav-links']} text-lg`}>{subCategory.name}</Link></li>
+                        ))}
+                    </ul>
+                </div>
             ))}
 		</div>
 
@@ -124,15 +122,20 @@ const Sidebar = ({ onClick, isActive }: { onClick: () => void, isActive: boolean
             <Image src='/icons/hamburger.svg' alt="RMAX Logo" width={32} height={32} onClick={onClick} />
 
             {isActive && (
-                <aside className={`fixed top-0 right-0 w-[20rem] h-full bg-white flex flex-col items-center justify-center gap-4`}>
-                    <Image src='/icons/hamburger.svg' alt="RMAX Logo" width={32} height={32} onClick={onClick} />
+                <aside className={`fixed top-0 right-0 w-[20rem] h-full bg-white flex flex-col items-stretch justify-start`}>
+                    <div className='flex justify-between items-start px-8 pt-8 mb-2'>
+                        <Image src={RMAX_LOGO} alt='RMAX LOGO' width={84} height={84} />
+                        <Image src='/icons/cross.svg' alt="Close" width={18} height={18} onClick={onClick} />
+                    </div>
 
-                    {options.map((option) => (
-                        <li key={option.name}>
-                            <Link href={option.link} className="text-accent-500 hover:text-blue-500" onClick={onClick}>{option.name}</Link>
-                        </li>
-                    ))}
-                    <Button name="Call us"></Button>
+                    <ul>
+                        {options.map((option) => (
+                            <li key={option.name} className='list-none hover:bg-[#BE1B1B] hover:text-stone-50 px-8 py-3'>
+                                <Link href={option.link} onClick={onClick}>{option.name}</Link>
+                            </li>
+                        ))}
+                        <Button name="Call us" className='self-start mx-8 my-2'></Button>
+                    </ul>
                 </aside>
             )}
         </nav>

@@ -1,13 +1,19 @@
 // Importing built-in dependencies
 import React from "react";
 import Image from "next/image";
+import { PrismaClient } from "@prisma/client";
 
 // Importing components
 import TopBanner from "@/components/sections/topBanner/topBanner";
-//import HomeProducts from "@/components/sections/homeProducts";
 
 
-const ProductListPage: React.FC = () => {
+export default async function ProductPage() {
+    const prisma = new PrismaClient();
+    
+    const [] = await Promise.all([
+        prisma.product.findMany({})
+    ]);
+
     return (
         <>
             <TopBanner src="/images/products-overlay.png" title="Products" subtitle="Home / Products"/>
@@ -96,5 +102,3 @@ const Tag = ({ content }: {content: string}) => {
         </>
     );
 }
-
-export default ProductListPage;
