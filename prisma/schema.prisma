@@ -46,6 +46,7 @@ model File {
 model Product {
   id          String   @id @default(uuid())
   name        String   @unique
+  slug        String   @unique
   subtitle    String
   description String
   isActive    Boolean  @default(true)
@@ -68,13 +69,14 @@ model Product {
   dataSheet   File?   @relation("ProductDataSheet", fields: [dataSheetId], references: [id])
   dataSheetId String?
 
-  images File[] @relation("ProductImages")
+  image       File    @relation("ProductImages", fields: [imageId], references: [id])
+  imageId     String
 }
 
 model Category {
   id          String @id @default(uuid())
   name        String @unique
-  slug        String 
+  slug        String @unique
   description String?
   isActive    Boolean @default(true)
 
@@ -91,7 +93,7 @@ model Category {
 model SubCategory {
   id          String @id @default(uuid())
   name        String @unique
-  slug        String
+  slug        String @unique
   isActive    Boolean @default(true)
 
   category    Category @relation(fields: [categoryId], references: [id])

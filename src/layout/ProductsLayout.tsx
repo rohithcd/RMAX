@@ -34,7 +34,7 @@ interface ProductProps {
     subCategory: Record<string, unknown>;
     subCategoryId: string;
 
-    tags: Record<string, unknown>[];
+    tags?: Record<string, unknown>[];
     isActive: boolean;
 }
 
@@ -43,7 +43,7 @@ interface Options {
     value: string
 }
 
-export function ProductsPage({ products, categories, subCategories, tags }: { products: ProductProps[], categories: Options[], subCategories: Record<string, Options[]>, tags: {text: string, value: string, selected: false}[] }) {
+export function ProductsPage({ products, categories, subCategories, tags }: { products: ProductProps[], categories: Options[], subCategories: Record<string, Options[]>, tags: {text: string, value: string, selected: boolean}[] }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isEditMode, setIsEditMode] = useState(false);
     const [currentProduct, setCurrentProduct] = useState<ProductProps | null>(null);

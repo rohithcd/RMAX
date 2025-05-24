@@ -9,16 +9,20 @@ import DataTable from "@/layout/Datatable";
 import { Modal } from "@/components/ui/modal";
 import Form from "@/components/components/form/Form";
 import Input from "@/components/components/form/input/InputField";
-import TextArea from "@/components/components/form/input/TextArea";
 import Button from "@/components/ui/adminButton";
-import FileInput from "@/components/components/form/input/FileInput";
 import { Label } from "@radix-ui/react-dropdown-menu";
+import Select from "@/components/components/form/Select";
 
 // Importing utility functions
-import { createRecord, deleteFiles, updateRecord, uploadFiles } from "@/utils/frontend/api";
 import { toUrlSlug } from "@/utils/frontend/formatter";
+import { createRecord, updateRecord } from "@/utils/frontend/api";
 
-function BaseLayout({ data }: { data: Record<string, unknown>[] }) {
+interface Options {
+    label: string, 
+    value: string
+}
+
+function SubCategoryLayout({ data, categories }: { data: Record<string, unknown>[], categories: Options[] }) {
     // Variables
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isEditMode, setIsEditMode] = useState(false);
@@ -41,55 +45,20 @@ function BaseLayout({ data }: { data: Record<string, unknown>[] }) {
             // Extract basic record data
             const recordData = {
                 name: formData.get("name") as string,
-                description: formData.get("description") as string,
-                slug: toUrlSlug(formData.get("name") as string)
+                slug: toUrlSlug(formData.get("name") as string),
+                category: {
+                    connect: {id: formData.get("category") as string}
+                }
             };
-
-            const image = formData.get("image") as File;
-            let fileId = null;
-
-            if(image && image.size > 0 && image.name) {
-                const [uploadResponse, uploadError] = await uploadFiles({ files: [image] });
-                
-                console.log('Upload Response: ', uploadResponse);
-
-                if (uploadError) {
-                    console.error("File upload error:", uploadError);
-                    toast.error(uploadError.message);
-                    return;
-                }
-    
-                // Extract file IDs from the response
-                if (uploadResponse?.files && Array.isArray(uploadResponse.files)) {
-                    console.log('File upload response');
-                    fileId = uploadResponse.files[0].id;
-                }
-            }
 
             // Create or update record
             const [responseData, error] = await (isEditMode && currentRecord 
                 ? updateRecord({ 
-                    record: { ...recordData, 
-                        
-                    ...(fileId ? {
-                        image: {
-                        connect: { id: fileId }
-                    }} : {}), 
+                    record: { ...recordData, id: currentRecord.id }, 
+                    object: "subCategory" 
+                })
 
-                    id: currentRecord.id 
-                }, 
-                    object: "category" 
-                  })
-                : createRecord({ 
-                    record: {...recordData, 
-                        
-                    ...(fileId ? {
-                        image: {
-                        connect: { id: fileId }
-                    }} : {}), 
-                }, 
-                    object: "category" 
-                  })
+                : createRecord({ record: recordData, object: "subCategory" })
             );
     
             if (error) {
@@ -97,20 +66,10 @@ function BaseLayout({ data }: { data: Record<string, unknown>[] }) {
                 toast.error(error.message);
                 return;
             }
-
-            if(isEditMode && fileId) {
-                const [, error] = await deleteFiles({ fileIds: [fileId] });
-
-                if(error) {
-                    console.error('Error: ', error);
-                    //toast.error(error.message);
-                }
-            }
     
             // Success handling
             console.log("Success:", responseData);
             setIsModalOpen(false);
-            window.location.reload();
         } catch (error) {
             console.error("Submission error:", error);
             toast.error((error as Error).message);
@@ -130,13 +89,13 @@ function BaseLayout({ data }: { data: Record<string, unknown>[] }) {
         setIsModalOpen(true);
     }
 
-    const modalTitle = isEditMode ? "Edit Category" : "Add Category";
+    const modalTitle = isEditMode ? "Edit Sub Category" : "Add Sub Category";
     const submitButtonText = isEditMode ? "Update" : "Create";
 
     return (
         <>
             <div className="flex items-center justify-between mb-4">
-                <Button variant="outline" onClick={handleAddNew} className="w-32">Add Category</Button>
+                <Button variant="outline" onClick={handleAddNew} className="w-32">Add Sub Category</Button>
             </div>
 
             <Modal 
@@ -154,34 +113,31 @@ function BaseLayout({ data }: { data: Record<string, unknown>[] }) {
                         <Input 
                             type="text" 
                             name="name" 
-                            placeholder="Enter category name" 
+                            placeholder="Enter name" 
                             defaultValue={currentRecord?.name as string || ''}
                         />
                     </span>
 
                     <span>
-                        <Label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-400">Description</Label>
-                        <TextArea 
-                            name="description" 
-                            placeholder="Enter description" 
-                            rows={4}
-                            defaultValue={currentRecord?.description as string || ''}
+                        <Label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-400">Category</Label>
+                        <Select 
+                            name="category" 
+                            placeholder="Select Category" 
+                            options={categories}
+                            onChange={() => {}}
+                            defaultValue={currentRecord?.categoryId as string || ''}
                         />
-                    </span>
-
-                    <span>
-                        <Label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-400">Overlay image</Label>
-                        <FileInput name="image"/>
+                        
                     </span>
 
                     <Button variant="primary" className="w-32">{submitButtonText}</Button>
                 </Form>
             </Modal>
             
-            <DataTable columns={{'name': 'text', 'description': 'text', 'isActive': 'boolean', 'image': 'file'}} data={data} onEdit={handleEdit} object="category"/>
+            <DataTable columns={{'name': 'text', 'isActive': 'boolean'}} data={data} onEdit={handleEdit} object="productModel"/>
             
         </>
     )
 }
 
-export default BaseLayout;
+export default SubCategoryLayout;

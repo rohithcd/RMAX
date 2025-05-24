@@ -15,7 +15,7 @@ export default async function CategoryPage() {
     return (
         <>
             <PageBreadcrumb pageTitle="Category" />
-            <BaseLayout name="Category" data={categories}/>
+            <BaseLayout data={categories}/>
         </>
     )
 }

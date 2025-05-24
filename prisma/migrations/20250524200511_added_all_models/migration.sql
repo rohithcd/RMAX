@@ -30,6 +30,7 @@ CREATE TABLE "File" (
 CREATE TABLE "Product" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
+    "slug" TEXT NOT NULL,
     "subtitle" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "isActive" BOOLEAN NOT NULL DEFAULT true,
@@ -38,6 +39,7 @@ CREATE TABLE "Product" (
     "categoryId" TEXT NOT NULL,
     "subCategoryId" TEXT NOT NULL,
     "dataSheetId" TEXT,
+    "imageId" TEXT NOT NULL,
 
     CONSTRAINT "Product_pkey" PRIMARY KEY ("id")
 );
@@ -165,14 +167,6 @@ CREATE TABLE "Project" (
 );
 
 -- CreateTable
-CREATE TABLE "_ProductImages" (
-    "A" TEXT NOT NULL,
-    "B" TEXT NOT NULL,
-
-    CONSTRAINT "_ProductImages_AB_pkey" PRIMARY KEY ("A","B")
-);
-
--- CreateTable
 CREATE TABLE "_ProductToTag" (
     "A" TEXT NOT NULL,
     "B" TEXT NOT NULL,
@@ -196,16 +190,22 @@ CREATE UNIQUE INDEX "File_filePath_key" ON "File"("filePath");
 CREATE UNIQUE INDEX "Product_name_key" ON "Product"("name");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "Product_slug_key" ON "Product"("slug");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "Category_name_key" ON "Category"("name");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Category_slug_key" ON "Category"("slug");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "SubCategory_name_key" ON "SubCategory"("name");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Tag_name_key" ON "Tag"("name");
+CREATE UNIQUE INDEX "SubCategory_slug_key" ON "SubCategory"("slug");
 
 -- CreateIndex
-CREATE INDEX "_ProductImages_B_index" ON "_ProductImages"("B");
+CREATE UNIQUE INDEX "Tag_name_key" ON "Tag"("name");
 
 -- CreateIndex
 CREATE INDEX "_ProductToTag_B_index" ON "_ProductToTag"("B");

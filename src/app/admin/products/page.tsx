@@ -33,15 +33,15 @@ export default async function ProductsPage() {
 	]);
 
 	const categoriesObj = categories.map((row) => ({label: row.name, value: row.id }));
-	const subCategoriesObj = subCategories.reduce((acc: Record<string, unknown[]>, row: Record<string, unknown>) => {
+	const subCategoriesObj = subCategories.reduce((acc: Record<string, Options[]>, row: Record<string, unknown>) => {
 		if(!Object.hasOwn(acc, (row.category as Record<string, string>).id)) {
 			return {...acc, [(row.category as Record<string, string>).id]: [{
-				label: row.name,
-				value: row.id,
+				label: row.name as string,
+				value: row.id as string,
 			}]}
 		}
 
-		acc[(row.category as Record<string, string>).id].push({ label: row.name, value: row.id });
+		acc[(row.category as Record<string, string>).id].push({ label: row.name as string, value: row.id as string});
 		return acc;
 	}, {} as Record<string, Options[]>);
 

@@ -25,7 +25,7 @@ interface ProductProps {
     subCategory: Record<string, unknown>;
     subCategoryId: string;
 
-    tags: Record<string, unknown>[];
+    tags?: Record<string, unknown>[];
     isActive: boolean;
 }
 
