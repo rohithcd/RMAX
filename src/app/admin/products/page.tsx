@@ -4,37 +4,58 @@ import { PrismaClient } from "@prisma/client";
 // Impoting custom components
 import PageBreadcrumb from "@/components/common/PageBreadCrumb";
 import ProductsLayout from "@/layout/ProductsLayout";
-//import { Modal } from "@/components/ui/modal";
 
-/*interface ProductProps {
-	name: string;
-	category: string;
-	subCategory: string;
-	status: "Active" | "Deactive";
-}*/
+interface Options {
+    label: string, 
+    value: string
+}
 
 export default async function ProductsPage() {
 	const prisma = new PrismaClient();
 
-	const products = await prisma.product.findMany({
-		include: {
-			subCategory: true,
-			category: true,
-			images: true
+	const [products, categories, subCategories, tags] = await Promise.all([
+		prisma.product.findMany({
+			include: {
+				subCategory: true,
+				category: true,
+				images: true
+			},
+		}),
+
+		prisma.category.findMany(),
+		prisma.subCategory.findMany({
+			include: {
+				category: true
+			}
+		}), // ✅ Fixed incorrect model
+
+		prisma.tag.findMany({})
+	]);
+
+	const categoriesObj = categories.map((row) => ({label: row.name, value: row.id }));
+	const subCategoriesObj = subCategories.reduce((acc: Record<string, unknown[]>, row: Record<string, unknown>) => {
+		if(!Object.hasOwn(acc, (row.category as Record<string, string>).id)) {
+			return {...acc, [(row.category as Record<string, string>).id]: [{
+				label: row.name,
+				value: row.id,
+			}]}
 		}
-	});
 
-	const categories = await prisma.category.findMany({});
-	const subCategories = await prisma.tag.findMany({});
+		acc[(row.category as Record<string, string>).id].push({ label: row.name, value: row.id });
+		return acc;
+	}, {} as Record<string, Options[]>);
 
-	console.log('Products:', products);
-	console.log('Categories:', categories);
-	console.log('Subcategories:', subCategories);
+	const tagObj = tags.map((row) => ({text: row.name, value: row.id, selected: false }));
+
+	console.log('Products: ', products);
+	console.log('Categories: ', categories);
+	console.log('Sub Categories: ', subCategoriesObj);
+	console.log('Tags: ', tagObj);
 
 	return (
 		<>
 			<PageBreadcrumb pageTitle="Products" />
-			<ProductsLayout products={products} categories={categories} subCategories={subCategories}/>
+			<ProductsLayout products={products} categories={categoriesObj} subCategories={subCategoriesObj} tags={tagObj}/>
 		</>
 	)
 }

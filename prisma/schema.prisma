@@ -13,92 +13,170 @@ generator client {
 // Define the User model
 model User {
   id        Int      @id @default(autoincrement()) // Auto incrementing primary key
-  name      String   // Name field (removed incorrect @map)
+  name      String // Name field (removed incorrect @map)
   username  String   @unique // Unique username
   email     String   @unique // Unique email (added @unique constraint)
-  password  String   // Store the user's hashed password
-  createdAt DateTime @default(now()) // Automatically set to current timestamp
+  password  String // Store the user's hashed password
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
-// Define the File model
 model File {
-  id           String    @id @default(uuid()) // Unique file ID
-  fileName     String    @unique // Original file name
-  originalName String?   // File name when uploaded
-  filePath     String    @unique // File path or cloud storage URL
-  size         Int       // File size in bytes
-  type         String    // MIME type (e.g., image/png, application/pdf)
-  createdAt    DateTime  @default(now()) // Timestamp
-  isVisible    Boolean   @default(true)
-  
-  // Fixed relations - separate relations with different names
-  productsAsDataSheet Product[] @relation("ProductDataSheet")
-  productsAsImage     Product[] @relation("ProductImages")
-  
-  // Added missing relation
-  news News[]
+  id           String   @id @default(uuid())
+  fileName     String   @unique
+  originalName String?
+  filePath     String   @unique
+  size         Int
+  type         String
+  isVisible    Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Relations
+  productsAsDataSheet Product[]      @relation("ProductDataSheet")
+  productsAsImage     Product[]      @relation("ProductImages")
+  news                News[]
+  models              ProductModel[]
+  carousels           Carousel[]
+  productCards        ProductCard[]
+  projects            Project[]
 }
 
-// Define the Product model
 model Product {
-  id          String    @id @default(uuid())
-  name        String    @unique
-  category    Category  @relation(fields: [categoryId], references: [id])
-  categoryId  String
-  subCategory Tag[]     // Many-to-many relation with Tag
-  isActive    Boolean   @default(true)
-  createdAt   DateTime  @default(now()) // Timestamp
-  description String    
-  // Fixed relations - separate relations with different names
-  dataSheet   File?      @relation("ProductDataSheet", fields: [dataSheetId], references: [id])
+  id          String   @id @default(uuid())
+  name        String   @unique
+  subtitle    String
+  description String
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId String
+
+  subCategory   SubCategory @relation(fields: [subCategoryId], references: [id])
+  subCategoryId String
+
+  tags Tag[] // Many-to-many
+
+  models ProductModel[]
+
+  cards ProductCard[]
+
+  dataSheet   File?   @relation("ProductDataSheet", fields: [dataSheetId], references: [id])
   dataSheetId String?
 
-  images      File[]    @relation("ProductImages")
+  images File[] @relation("ProductImages")
 }
 
 model Category {
-  id        String    @id @default(uuid())
-  name      String    @unique
-  createdAt DateTime  @default(now()) // Timestamp
-  products  Product[]
+  id   String @id @default(uuid())
+  name String @unique
+
+  products Product[]
+
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  SubCategory SubCategory[]
+}
+
+model SubCategory {
+  id   String @id @default(uuid())
+  name String @unique
+
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId String
+
+  products Product[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Tag {
-  id        String    @id @default(uuid())
-  name      String    @unique
-  createdAt DateTime  @default(now()) // Timestamp
-  products  Product[]
+  id       String    @id @default(uuid())
+  name     String    @unique
+  products Product[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
-// Define News model
 model News {
-  id          String   @id @default(uuid()) // Fixed missing parentheses
+  id          String   @id @default(uuid())
   title       String
-  description String   
-  createdAt   DateTime @default(now())
-  image       File     @relation(fields: [imageId], references: [id])
-  imageId     String
+  description String
   isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  image   File   @relation(fields: [imageId], references: [id])
+  imageId String
 }
 
-// Define Carousel model
 model Carousel {
   id          String   @id @default(uuid())
-  image       File     @relation(fields: [imageId], references: [id])
-  imageId     String
   title       String
   subTitle    String?
   description String?
   isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  image   File   @relation(fields: [imageId], references: [id])
+  imageId String
 }
 
-// Define Message model
 model Message {
+  id        String   @id @default(uuid())
+  firstName String
+  lastName  String
+  email     String
+  phone     String
+  country   String?
+  message   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ProductModel {
   id          String   @id @default(uuid())
-  firstName   String
-  lastName    String 
-  email       String 
-  phone       String 
-  country     String? 
-  message     String?
+  name        String
+  description String
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  image   File   @relation(fields: [imageId], references: [id])
+  imageId String
+
+  product   Product @relation(fields: [productId], references: [id])
+  productId String
+}
+
+model ProductCard {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  image   File   @relation(fields: [imageId], references: [id])
+  imageId String
+
+  product   Product @relation(fields: [productId], references: [id])
+  productId String
+}
+
+model Project {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  image   File   @relation(fields: [imageId], references: [id])
+  imageId String
 }

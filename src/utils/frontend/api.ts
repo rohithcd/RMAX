@@ -9,6 +9,11 @@ interface FileUploadProps {
     requestParams?: ApiRequestParams;
 }
 
+interface FileDeleteProps {
+    fileIds: string[]; // Optional property for file uploads
+    requestParams?: ApiRequestParams;
+}
+
 interface ApiRequestParams {
     headers?: Record<string, string>;
 }
@@ -114,9 +119,26 @@ const uploadFiles = async ({ files, requestParams }: FileUploadProps): Promise<F
     }
 };
 
+/**
+ * Uploads one or more files to the server using the standard submitRequest format
+ * @param {ApiRequestProps} props - The request properties
+ * @returns {Promise<ApiResponseProps>} A tuple with [response, error]
+ */
+const deleteFiles = async ({ fileIds, requestParams }: FileDeleteProps): Promise<FileUploadResponse> => {
+    const formData = new FormData();
+
+    fileIds.forEach((fileId) => {
+        formData.set('id', fileId);
+    });
+
+    const { data, error } = await submitRequest({ data: formData, url: `/api/services/file`, method: 'DELETE', requestHeaders: requestParams?.headers });
+    return (error) ? [null, error] : [data as Record<string, string>, null];
+}
+
 export {
     updateRecord,
     deleteRecord,
     createRecord,
-    uploadFiles
+    uploadFiles,
+    deleteFiles
 }

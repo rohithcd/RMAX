@@ -134,7 +134,7 @@ export async function DELETE(req: NextRequest) {
 
         console.log('Deleted Record:', record);
 
-        return NextResponse.json({ message: 'Record created successfully', record }, { status: 201 });
+        return NextResponse.json({ message: 'Record deleted successfully', record }, { status: 201 });
     } catch (error: unknown) {
         console.error('Error creating record:', error);
 

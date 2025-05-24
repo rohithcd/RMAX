@@ -1,6 +1,7 @@
 // Importing built-in dependencies
 import type { Metadata } from "next";
 import { Manrope, Archivo } from "next/font/google";
+import { Toaster } from "react-hot-toast";
 
 // Importing global styles
 import "./globals.css";
@@ -30,6 +31,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
 			<body
 				className={`${archivo.variable} ${manrope.variable} antialiased`}
 			>
+				<Toaster position="bottom-center" containerClassName="z-99"/>
 				{children}
 			</body>
 		</html>

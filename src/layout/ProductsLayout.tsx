@@ -2,73 +2,66 @@
 
 // Importing built-in dependencies
 import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 // Impoting custom components
 import ProductsTable from "@/layout/ProductsTable";
 import { Modal } from "@/components/ui/modal";
+import { Label } from "@radix-ui/react-dropdown-menu";
 import Form from "@/components/components/form/Form";
 import Input from "@/components/components/form/input/InputField";
 import TextArea from "@/components/components/form/input/TextArea";
 import Button from "@/components/ui/adminButton";
 import MultiSelect from "@/components/components/form/MultiSelect";
 import FileInput from "@/components/components/form/input/FileInput";
-import { Label } from "@radix-ui/react-dropdown-menu";
 import Select from "@/components/components/form/Select";
+
+// Importing utility functions
 import { createRecord, updateRecord, uploadFiles } from "@/utils/frontend/api";
+
 
 //import { useRouter } from "next/navigation";
 
 interface ProductProps {
     id: string;
     name: string;
+    subtitle: string;
     description: string;
-    category: CategoryProps;
+
+    category: Record<string, unknown>;
     categoryId: string;
-    subCategory: CategoryProps[];
+
+    subCategory: Record<string, unknown>;
+    subCategoryId: string;
+
+    tags: Record<string, unknown>[];
     isActive: boolean;
 }
 
-interface CategoryProps {
-    id: string;
-    name: string;
+interface Options {
+    label: string, 
+    value: string
 }
 
-export function ProductsPage({ products, categories, subCategories }: { products: ProductProps[], categories: CategoryProps[], subCategories: CategoryProps[] }) {
+export function ProductsPage({ products, categories, subCategories, tags }: { products: ProductProps[], categories: Options[], subCategories: Record<string, Options[]>, tags: {text: string, value: string, selected: false}[] }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [productCategory, setProductCategory] = useState<{label: string, value: string}[]>([]);
-    const [productSubCategory, setProductSubCategory] = useState<{text: string, value: string, selected: boolean}[]>([]);
-    const [subCategoryIds, setSubCategoryIds] = useState<string[]>([]);
     const [isEditMode, setIsEditMode] = useState(false);
     const [currentProduct, setCurrentProduct] = useState<ProductProps | null>(null);
-
-    //const router = useRouter();
-
-    useEffect(() => {
-        setProductCategory(() => {
-            return categories.map((row) => ({
-                label: row.name,
-                value: row.id
-            }));
-        });
-
-        setProductSubCategory(() => {
-            return subCategories.map((row) => ({
-                text: row.name,
-                value: row.id,
-                selected: false
-            }));
-        });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    const [subCategoryOptions, setSubCategoryOptions] = useState<Options[]>([]);
+    const [tagIds, setTagIds] = useState<string[]>([]);
 
     // Reset form state when modal closes
     useEffect(() => {
         if (!isModalOpen) {
             setIsEditMode(false);
             setCurrentProduct(null);
-            setSubCategoryIds([]);
         }
     }, [isModalOpen]);
+
+    function handleMultiSelectChange(value: Array<string>) {
+        console.log('Value: ', value);
+        //setSubCategoryIds(e);
+    }
 
     async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault(); // Prevent default form submission
@@ -80,6 +73,7 @@ export function ProductsPage({ products, categories, subCategories }: { products
             // Extract basic record data
             const recordData = {
                 name: formData.get("name") as string,
+                subtitle: formData.get("subtitle") as string,
                 description: formData.get("description") as string
                 // Other fields as needed
             };
@@ -107,8 +101,7 @@ export function ProductsPage({ products, categories, subCategories }: { products
     
                 if (uploadError) {
                     console.error("File upload error:", uploadError);
-                    // Show user-friendly error message
-                    // setError("Unable to upload files. Please try again.");
+                    toast.error(uploadError.message);
                     return;
                 }
     
@@ -123,20 +116,30 @@ export function ProductsPage({ products, categories, subCategories }: { products
     
             // Get category ID with fallback
             const categoryId = formData.get("category") as string;
+            const subCategoryId = formData.get("subCategory") as string;
+            const productSheet = (sheetFile) ? fileIds[0] : null;
             
             // Prepare the record data for creation/update
             const recordPayload = {
                 ...recordData,
-                ...(categoryId ? {
-                    category: {
-                        connect: { id: categoryId }
+                category: {
+                    connect: { id: categoryId }
+                },
+                subCategory: {
+                    connect: { id: subCategoryId }
+                },
+                ...(productSheet ? {
+                    dataSheet: {
+                        connect: { id: productSheet }
+                    },
+                }: {}),
+
+                ...(tagIds.length > 0 ? {
+                    tags: {
+                        [isEditMode ? 'set' : 'connect']: tagIds.map((id: string) => ({ id }))
                     }
                 } : {}),
-                ...(subCategoryIds.length > 0 ? {
-                    subCategory: {
-                        [isEditMode ? 'set' : 'connect']: subCategoryIds.map(id => ({ id }))
-                    }
-                } : {}),
+
                 ...(fileIds.length > 0 ? {
                     images: {
                         connect: fileIds.map(id => ({ id }))
@@ -158,66 +161,39 @@ export function ProductsPage({ products, categories, subCategories }: { products
     
             if (error) {
                 console.error("API error:", error);
-                // Show user-friendly error message
-                // setError("Failed to save product. Please try again.");
+                toast.error(error.message);
                 return;
             }
     
             // Success handling
             console.log("Success:", responseData);
             setIsModalOpen(false);
-            setSubCategoryIds([]);
+            setTagIds([]);
             
             // Use shallow routing to refresh data without full page reload
             //router.replace(router.asPath, undefined, { shallow: true });
         } catch (error) {
-            console.error("Submission error:", error);
-            // Show user-friendly error message
-            // setError("An unexpected error occurred. Please try again.");
+            toast.error((error as Error).message);
+            console.log('Error: ', error);
         }
     }
 
-    function handleMultiSelectChange(e: Array<string>) {
-        setSubCategoryIds(e);
-    }
-
     function handleEdit(product: ProductProps) {
-        console.log("Editing product:", product);
-
         setCurrentProduct(product);
         setIsEditMode(true);
-        setSubCategoryIds(product.subCategory.map((subCat: unknown) => (subCat as Record<string, string>).id)); // Assuming subCategory is an array of objects with an id property
-    
-
-        //setSubCategoryIds(); //
-        
-        // Set form values based on the selected product
-        /*if (product.categoryId) {
-            // Find and preselect category
-            const categoryOption = productCategory.find(cat => cat.value === product.categoryId);
-            if (categoryOption) {
-                // Note: This depends on how your Select component works
-                // You might need to adjust this logic
-            }
-        }*/
-        
-        // Get current subcategories for this product
-        // This would require additional data fetching in a real implementation
-        // For now we're assuming product has a subCategoryIds property (which it doesn't in your interface)
-        // You'll need to adjust this based on your actual data structure
-        
-        // Example placeholder:
-        // setSubCategoryIds(product.subCategoryIds || []);
-        
-        // Open the modal with pre-filled data
         setIsModalOpen(true);
+        setSubCategoryOptions(subCategories[product.categoryId])
     }
     
     function handleAddNew() {
         setIsEditMode(false);
         setCurrentProduct(null);
-        setSubCategoryIds([]);
+        setTagIds([]);
         setIsModalOpen(true);
+    }
+
+    function handleCategoryChange(selectedValue: string) {
+        setSubCategoryOptions(subCategories[selectedValue]);
     }
 
     const modalTitle = isEditMode ? "Edit Product" : "Add Product";
@@ -250,6 +226,16 @@ export function ProductsPage({ products, categories, subCategories }: { products
                     </span>
 
                     <span>
+                        <Label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-400">Product Subtitle</Label>
+                        <Input 
+                            type="text" 
+                            name="subtitle" 
+                            placeholder="Enter product subtitle" 
+                            defaultValue={currentProduct?.subtitle || ''}
+                        />
+                    </span>
+
+                    <span>
                         <Label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-400">Product Description</Label>
                         <TextArea 
                             name="description" 
@@ -263,34 +249,29 @@ export function ProductsPage({ products, categories, subCategories }: { products
                         <Label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-400">Product Category</Label>
                         <Select 
                             name="category" 
-                            options={productCategory} 
-                            onChange={() => {}}
+                            options={categories} 
+                            onChange={handleCategoryChange}
                             defaultValue={currentProduct?.categoryId || ''}
                         />
                     </span>
 
-                    <MultiSelect 
-                        name="subCategory" 
-                        label="Select Sub Category" 
-                        onChange={handleMultiSelectChange} 
-                        options={[{text: "Select Sub Category", value: "", selected: true}, ...productSubCategory]}
-                        defaultSelected={subCategoryIds} // This is where you set the default selected values
-
-                        // You'll need to adjust this based on how your MultiSelect handles default/selected values
-                        //selectedValues={subCategoryIds} 
-                    />
-
-                    {/* <span>
-                        <Label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-400">Product Price</Label>
-                        <Input 
-                            type="number" 
-                            name="price" 
-                            placeholder="Enter product price" 
-                            min="0" 
-                            step={0.10}
-                            defaultValue={currentProduct?.price?.toString() || ''}
+                    <span>
+                        <Label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-400">Product Sub Category</Label>
+                        <Select 
+                            name="subCategory" 
+                            options={subCategoryOptions} 
+                            onChange={() => {}}
+                            defaultValue={currentProduct?.subCategoryId || ''}
                         />
-                    </span> */}
+                    </span>
+
+                    <MultiSelect 
+                        name="tags" 
+                        label="Select Tags" 
+                        onChange={handleMultiSelectChange} 
+                        options={[{text: "Select Tags", value: "", selected: true}, ...tags]}
+                        defaultSelected={tagIds}
+                    />
 
                     <span>
                         <Label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-400">Product Sheet</Label>
@@ -298,7 +279,7 @@ export function ProductsPage({ products, categories, subCategories }: { products
                     </span>
 
                     <span>
-                        <Label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-400">Product Sheet</Label>
+                        <Label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-400">Product Image</Label>
                         <FileInput name="images"/>
                     </span>
 
@@ -307,7 +288,6 @@ export function ProductsPage({ products, categories, subCategories }: { products
             </Modal>
             
             <ProductsTable data={products} onEdit={handleEdit}/>
-            
         </>
     )
 }

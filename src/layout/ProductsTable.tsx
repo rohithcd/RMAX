@@ -11,20 +11,22 @@ import { DotsVerticalIcon } from "@radix-ui/react-icons";
 import { deleteRecord, updateRecord } from "@/utils/frontend/api";
 
 import { useAlert } from "@/context/AlertContext";
+import { useRouter } from 'next/navigation';
 
 interface ProductProps {
-	id: string;
-	name: string;
-	description: string;
-	category: CategoryProps;
-	categoryId: string;
-	subCategory: CategoryProps[];
-	isActive: boolean;
-}
-
-interface CategoryProps {
     id: string;
     name: string;
+    subtitle: string;
+    description: string;
+
+    category: Record<string, unknown>;
+    categoryId: string;
+
+    subCategory: Record<string, unknown>;
+    subCategoryId: string;
+
+    tags: Record<string, unknown>[];
+    isActive: boolean;
 }
 
 interface ProductTableProps {
@@ -37,6 +39,8 @@ const productKeys: (keyof ProductProps)[] = ["name", "description", "category", 
 export default function ProductsTable({ data, onEdit }: ProductTableProps) {
 	const [products, setProducts] = React.useState<ProductProps[]>(data);
 	const { showAlert } = useAlert();
+
+	const router = useRouter();
 
 	async function handleStatus(event: React.MouseEvent<HTMLDivElement>) {
 		const userConfirmed = await showAlert({
@@ -108,6 +112,22 @@ export default function ProductsTable({ data, onEdit }: ProductTableProps) {
 		onEdit(record);
 	}
 
+	function handleViewCard(event: React.MouseEvent<HTMLDivElement>) {
+		const { id } = (event.target as HTMLDivElement).dataset;
+		if(!id) return;
+
+		router.push(`/admin/products/cards/${id}`);
+
+		//redirect to dynamic page
+	}
+
+	function handleViewModel(event: React.MouseEvent<HTMLDivElement>) {
+		const { id } = (event.target as HTMLDivElement).dataset;
+		if(!id) return;
+
+		router.push(`/admin/products/models/${id}`);
+	}
+
 	return (
 		<div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
 			<div className="max-w-full overflow-x-auto">
@@ -140,30 +160,33 @@ export default function ProductsTable({ data, onEdit }: ProductTableProps) {
 												key={key}
 												className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400"
 											>
-												{(key === "category") ?
-													(item.category?.name) :
-													(key === "subCategory") ?
-														(item.subCategory?.map((subCat) => subCat.name).join(", ")) :
-													(key === "description") ?
-														(item[key] && item[key].length > 50 ? item[key].slice(0, 50) + "..." : item[key]) :
-													(key === "isActive") ?
-														(item[key] ? 
-															<Badge
-																size="sm"
-																color="success"
-															>
-																Active
-															</Badge> :
-															<Badge
-																size="sm"
-																color="error"
-															>
-																Deactive
-															</Badge>)
-														:
+												{((): React.ReactNode => {
+											switch (key) {
+												case "category":
+												return item.category?.name as string;
 
-														item[key]
-												}
+												case "subCategory":
+												return item.subCategory?.name as string;
+
+												case "tags":
+												return item.tags?.map(tag => tag.name).join(", ");
+
+												case "description":
+												return item[key] && item[key].length > 50
+													? item[key].slice(0, 50) + "..."
+													: item[key];
+
+												case "isActive":
+												return item[key] ? (
+													<Badge size="sm" color="success">Active</Badge>
+												) : (
+													<Badge size="sm" color="error">Deactive</Badge>
+												);
+
+												default:
+												return item[key];
+											}
+											})()}
 												
 											</TableCell>
 										))}
@@ -178,6 +201,8 @@ export default function ProductsTable({ data, onEdit }: ProductTableProps) {
 													<DropdownMenuLabel>Actions</DropdownMenuLabel>
 													<DropdownMenuItem onClick={handleEdit} data-id={item.id} data-index={index}>Edit</DropdownMenuItem>
 													<DropdownMenuItem onClick={handleStatus} data-id={item.id} data-index={index}>{item.isActive ? "Deactivate" : "Activate"}</DropdownMenuItem>
+													<DropdownMenuItem onClick={handleViewModel} data-id={item.id} data-index={index}>View Models</DropdownMenuItem>
+													<DropdownMenuItem onClick={handleViewCard} data-id={item.id} data-index={index}>View Cards</DropdownMenuItem>
 													<DropdownMenuItem onClick={handleDelete} data-id={item.id} data-index={index}>Delete</DropdownMenuItem>
 												</DropdownMenuContent>
 

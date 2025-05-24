@@ -10,28 +10,28 @@ import Form from "@/components/components/form/Form";
 import Input from "@/components/components/form/input/InputField";
 import TextArea from "@/components/components/form/input/TextArea";
 import Button from "@/components/ui/adminButton";
-import MultiSelect from "@/components/components/form/MultiSelect";
 import FileInput from "@/components/components/form/input/FileInput";
 import { Label } from "@radix-ui/react-dropdown-menu";
-import Select from "@/components/components/form/Select";
-import { createRecord, updateRecord, uploadFiles } from "@/utils/frontend/api";
+import { createRecord, deleteFiles, updateRecord, uploadFiles } from "@/utils/frontend/api";
+import toast from "react-hot-toast";
 //import { createRecord, updateRecord, uploadFiles } from "@/utils/frontend/api";
 
 //import { useRouter } from "next/navigation";
 
-interface NewsProps {
-    id: string;
-    image: Record<string, string>;
-    title: string;
-    description: string;
-    isActive: boolean;
-}
+// interface ProductModelProps {
+//     id: string;
+//     name: string;
+//     description: string;
+//     sheetId: string;
+//     sheet: Record<string, unknown>;
+//     productId: string;
+// }
 
-function NewsPage({ data }: { data: NewsProps }) {
+function ProductModel({ data, productId }: { data: Record<string, unknown>[], productId: string }) {
     // Variables
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isEditMode, setIsEditMode] = useState(false);
-    const [currentNews, setcurrentNews] = useState<NewsProps | null>(null);
+    const [currentRecord, setCurrentRecord] = useState<Record<string, unknown> | null>(null);
 
     // Reset form state when modal closes
     useEffect(() => {
@@ -49,20 +49,23 @@ function NewsPage({ data }: { data: NewsProps }) {
             
             // Extract basic record data
             const recordData = {
-                title: formData.get("title") as string,
-                description: formData.get("description") as string
+                name: formData.get("name") as string,
+                description: formData.get("description") as string,
             };
 
             const image = formData.get("image") as File;
             let fileId = null;
 
+            console.log('Image: ', image);
+
             if(image && image.size > 0 && image.name) {
                 const [uploadResponse, uploadError] = await uploadFiles({ files: [image] });
-    
+                
+                console.log('Upload Response: ', uploadResponse);
+
                 if (uploadError) {
                     console.error("File upload error:", uploadError);
-                    // Show user-friendly error message
-                    // setError("Unable to upload files. Please try again.");
+                    toast.error(uploadError.message);
                     return;
                 }
     
@@ -78,57 +81,83 @@ function NewsPage({ data }: { data: NewsProps }) {
             console.log('File Id: ', fileId);
 
             // Create or update record
-            const [responseData, error] = await (isEditMode && currentNews 
+            const [responseData, error] = await (isEditMode && currentRecord 
                 ? updateRecord({ 
-                    record: { ...recordData, imageId: fileId, id: currentNews.id }, 
-                    object: "news" 
+                    record: { ...recordData, 
+                        
+                    ...(fileId ? {
+                        sheet: {
+                        connect: { id: fileId }
+                    }} : {}), 
+
+                    product: {
+                        connect: {id: productId}
+                    },
+                    
+                    id: currentRecord.id 
+                }, 
+                    object: "productModel" 
                   })
                 : createRecord({ 
-                    record: {...recordData, imageId: fileId}, 
-                    object: "news" 
+                    record: {...recordData, 
+                        
+                    ...(fileId ? {
+                        sheet: {
+                        connect: { id: fileId }
+                    }} : {}), 
+                    
+                    product: {
+                        connect: {id: productId}
+                    },
+                }, 
+                    object: "productModel" 
                   })
             );
     
             if (error) {
                 console.error("API error:", error);
-                // Show user-friendly error message
-                // setError("Failed to save product. Please try again.");
+                toast.error(error.message);
                 return;
+            }
+
+            if(isEditMode && fileId) {
+                const [, error] = await deleteFiles({ fileIds: [fileId] });
+
+                if(error) {
+                    console.error('Error: ', error);
+                    toast.error(error.message);
+                }
             }
     
             // Success handling
             console.log("Success:", responseData);
             setIsModalOpen(false);
-            
-            // Use shallow routing to refresh data without full page reload
-            //router.replace(router.asPath, undefined, { shallow: true });
         } catch (error) {
             console.error("Submission error:", error);
-            // Show user-friendly error message
-            // setError("An unexpected error occurred. Please try again.");
+            toast.error((error as Error).message);
         }
 
     }
 
     function handleEdit(record: Record<string, unknown>) {
-        setcurrentNews(record);
+        setCurrentRecord(record);
         setIsEditMode(true);
         setIsModalOpen(true);
     }
     
     function handleAddNew() {
-        setcurrentNews({});
+        setCurrentRecord({});
         setIsEditMode(false);
         setIsModalOpen(true);
     }
 
-    const modalTitle = isEditMode ? "Edit News" : "Add News";
+    const modalTitle = isEditMode ? "Edit Product Model" : "Add Product Model";
     const submitButtonText = isEditMode ? "Update" : "Create";
 
     return (
         <>
             <div className="flex items-center justify-between mb-4">
-                <Button variant="outline" onClick={handleAddNew} className="w-32">Add News</Button>
+                <Button variant="outline" onClick={handleAddNew} className="w-32">Add Model</Button>
             </div>
 
             <Modal 
@@ -142,12 +171,12 @@ function NewsPage({ data }: { data: NewsProps }) {
                 
                 <Form onSubmit={handleSubmit} className="flex flex-col gap-4 p-8 m-8">
                     <span>
-                        <Label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-400">Title</Label>
+                        <Label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-400">Name</Label>
                         <Input 
                             type="text" 
-                            name="title" 
-                            placeholder="Enter news title" 
-                            defaultValue={currentNews?.title || ''}
+                            name="name" 
+                            placeholder="Enter model title" 
+                            defaultValue={currentRecord?.name as string || ''}
                         />
                     </span>
 
@@ -155,14 +184,14 @@ function NewsPage({ data }: { data: NewsProps }) {
                         <Label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-400">Description</Label>
                         <TextArea 
                             name="description" 
-                            placeholder="Enter news description" 
+                            placeholder="Enter model description" 
                             rows={4}
-                            defaultValue={currentNews?.description || ''}
+                            defaultValue={currentRecord?.description as string || ''}
                         />
                     </span>
 
                     <span>
-                        <Label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-400">Cover Image</Label>
+                        <Label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-400">Overlay image</Label>
                         <FileInput name="image"/>
                     </span>
 
@@ -170,10 +199,10 @@ function NewsPage({ data }: { data: NewsProps }) {
                 </Form>
             </Modal>
             
-            <DataTable columns={{'title': 'text', 'description': 'text', 'isActive': 'boolean', 'image': 'file'}} data={data} onEdit={handleEdit} object="news"/>
+            <DataTable columns={{'name': 'text', 'description': 'text', 'isActive': 'boolean', 'sheet': 'file'}} data={data} onEdit={handleEdit} object="productModel"/>
             
         </>
     )
 }
 
-export default NewsPage;
+export default ProductModel;

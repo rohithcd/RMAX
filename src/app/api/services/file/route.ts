@@ -1,9 +1,10 @@
 // Importing built-in dependencies
 import { NextRequest, NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
-import { join } from 'path';
+import path, { join } from 'path';
 import { writeFile, mkdir } from 'fs/promises';
 import { existsSync } from 'fs';
+import fs from 'fs/promises';
 
 // Importing utility functions
 //import { isAuthenticated } from '@/utils/backend/auth';
@@ -13,7 +14,7 @@ import { existsSync } from 'fs';
 const prisma = new PrismaClient();
 
 
-// GET /api/services/file/ or /api/services/file/[fileName]?action=download
+// POST /api/services/file
 export async function POST(req: NextRequest) {
     try {
         const formData = await req.formData();
@@ -98,6 +99,63 @@ export async function POST(req: NextRequest) {
             errors: errors.length > 0 ? errors : undefined
         }, {
             status: results.length > 0 ? 200 : 500
+        });
+    } catch (error) {
+        console.error('File upload error:', error);
+        return NextResponse.json({
+            success: false,
+            message: 'File upload failed',
+            error: (error as Error).message
+        }, {
+            status: 500
+        });
+    } finally {
+        await prisma.$disconnect();
+    }
+}
+
+// DELETE /api/services/file
+export async function DELETE(req: NextRequest) {
+    try {
+        const formData = await req.formData();
+        const fileIds = formData.getAll('id');
+
+        if (!fileIds || fileIds.length === 0) {
+            return NextResponse.json(
+                { error: 'No files provided' },
+                { status: 400 }
+            );
+        }
+
+        const fileRecords = await prisma.file.findMany({
+            where: { id: { in: fileIds as string[] }}
+        });
+
+        console.log('File Records: ', fileRecords);
+
+        for (const file of fileRecords) {
+            try {
+                const filePath = file.filePath; // adjust if filePath is relative
+                await fs.unlink(filePath);
+                console.log(`Deleted file from disk: ${filePath}`);
+            } catch (err) {
+                console.error(`Error deleting file ${file.filePath}:`, err);
+            }
+        }
+
+        const deletedFiles = await prisma.file.deleteMany({
+            where: { id: { in: fileIds as string[] }}
+        });
+
+
+        // Return response with results and any errors
+        return NextResponse.json({
+            success: true,
+            message: `Successfully deleted ${fileIds.length} file(s)`,
+            files: deletedFiles,
+            //errors: errors.length > 0 ? errors : undefined
+        }, {
+            status: 200
         });
     } catch (error) {
         console.error('File upload error:', error);
